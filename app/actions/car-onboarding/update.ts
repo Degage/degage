@@ -1,6 +1,7 @@
 import * as z from 'zod';
 import { assertCarOnboardingCarNameAvailable } from '@/actions/car-onboarding/assert-car-name-available';
 import { CarOnboarding, carOnboardingCarNameSchema, carOnboardingSchema } from '@/domain/car-onboarding.model';
+import { notifyCarOnboardingOwnerWelcome } from '@/actions/car-onboarding/notify-notification-emails';
 import { applyCarValueProposalTransition } from '@/actions/car-onboarding/preparation';
 import { readCarOnboarding } from '@/actions/car-onboarding/read';
 import { saveCarOnboardingWithPreparationCheck } from '@/actions/car-onboarding/save-with-preparation';
@@ -22,5 +23,11 @@ export const updateCarOnboarding = async (onboarding: CarOnboarding): Promise<Ca
     withCarValueTransition.carName = null;
   }
 
-  return saveCarOnboardingWithPreparationCheck(withCarValueTransition);
+  const saved = await saveCarOnboardingWithPreparationCheck(withCarValueTransition);
+  const ownerWasUnset = existing.owner?.id == null;
+  const ownerIsSet = saved.owner?.id != null;
+  if (ownerWasUnset && ownerIsSet) {
+    await notifyCarOnboardingOwnerWelcome(saved);
+  }
+  return saved;
 };

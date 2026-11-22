@@ -73,22 +73,28 @@ export async function notifyCarOnboardingCarValueCounter(onboarding: CarOnboardi
   });
 }
 
+export async function notifyCarOnboardingOwnerWelcome(onboarding: CarOnboarding): Promise<void> {
+  if (onboarding.id == null) return;
+  const owner = await resolveOwnerContact(onboarding);
+  if (owner == null) return;
+
+  await sendEmailByCode({
+    to: owner.email,
+    code: TemplatesEnum.CarOnboardingCreatedEmail,
+    locale: toEmailTemplateLocale(owner.locale),
+    variables: {
+      BUTTON_URL: buildPublicCarOnboardingUrl(onboarding.id),
+    },
+    replyTo: getSupportReplyToEmail(),
+  });
+}
+
 export async function notifyCarOnboardingCreated(onboarding: CarOnboarding): Promise<void> {
   if (onboarding.id == null) return;
 
-  const owner = await resolveOwnerContact(onboarding);
+  await notifyCarOnboardingOwnerWelcome(onboarding);
 
-  if (owner != null) {
-    await sendEmailByCode({
-      to: owner.email,
-      code: TemplatesEnum.CarOnboardingCreatedEmail,
-      locale: toEmailTemplateLocale(owner.locale),
-      variables: {
-        BUTTON_URL: buildPublicCarOnboardingUrl(onboarding.id),
-      },
-      replyTo: getSupportReplyToEmail(),
-    });
-  }
+  const owner = await resolveOwnerContact(onboarding);
 
   await sendEmailByCode({
     to: getSupportReplyToEmail(),

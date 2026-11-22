@@ -19,7 +19,8 @@ verzekering, pechverhelping, waarde, startdatum autodelen, afronden). Na de voor
 stappen.
 
 Wanneer een wagenonboarding wordt aangemaakt, krijgt operations een e-mail met een link ernaar in de adminzone. Als er bij het aanmaken al een
-eigenaar is, krijgt die ook een welkomstmail met een link om de publieke onboarding voort te zetten.
+eigenaar is, krijgt die ook een welkomstmail met een link om de publieke onboarding voort te zetten. Dezelfde welkomstmail gaat uit wanneer een
+admin later voor het eerst een eigenaar toewijst.
 
 Op de lijst zoekt de zoekfunctie ook op naam en e-mail van de eigenaar. Je kunt de lijst ook filteren op eigenaar.
 

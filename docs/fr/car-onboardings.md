@@ -19,7 +19,8 @@ véhicule, assurance, assistance routière, valeur, date de début du partage, f
 regroupe les étapes suivantes.
 
 Lorsqu'une intégration voiture est créée, operations reçoit un e-mail avec un lien vers celle-ci dans la zone admin. Si un propriétaire est déjà
-défini à la création, il reçoit aussi un e-mail de bienvenue avec un lien pour poursuivre l'intégration publique.
+défini à la création, il reçoit aussi un e-mail de bienvenue avec un lien pour poursuivre l'intégration publique. Le même e-mail de bienvenue
+est envoyé lorsqu'un admin assigne un propriétaire pour la première fois plus tard.
 
 Dans la liste, la recherche porte aussi sur le nom et l'e-mail du propriétaire. Vous pouvez aussi filtrer la liste par propriétaire.
 

@@ -5,7 +5,7 @@
 
 ### Public features
 
-- Added: owners receive a welcome email when their car onboarding is created.
+- Added: owners receive a welcome email when their car onboarding is created, or when an admin assigns them as owner for the first time.
 
 ### Technical
 

@@ -26,6 +26,7 @@ import {
   formatOptionalEuro,
   notifyCarOnboardingCarValueCounter,
   notifyCarOnboardingCreated,
+  notifyCarOnboardingOwnerWelcome,
   notifyCarOnboardingPinkFormUploaded,
   resolveOwnerContact,
   toEmailTemplateLocale,
@@ -193,6 +194,35 @@ describe('notifyCarOnboardingCarValueCounter', () => {
   });
 });
 
+describe('notifyCarOnboardingOwnerWelcome', () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+    getRequestLocaleMock.mockReset();
+    getRequestLocaleMock.mockReturnValue('en');
+  });
+
+  it('sends the owner welcome email', async () => {
+    vi.mocked(dbUserReadEmailAndLocale).mockResolvedValueOnce({ email: 'owner@example.com', locale: 'nl' });
+
+    await notifyCarOnboardingOwnerWelcome(
+      carOnboarding({
+        id: onboardingId,
+        owner: { id: 'user-1', name: 'Jane Doe' },
+      }),
+    );
+
+    expect(sendEmailByCode).toHaveBeenCalledWith({
+      to: 'owner@example.com',
+      code: TemplatesEnum.CarOnboardingCreatedEmail,
+      locale: 'nl',
+      variables: {
+        BUTTON_URL: buildPublicCarOnboardingUrl(onboardingId),
+      },
+      replyTo: 'support@example.com',
+    });
+  });
+});
+
 describe('notifyCarOnboardingCreated', () => {
   afterEach(() => {
     vi.clearAllMocks();
@@ -201,7 +231,9 @@ describe('notifyCarOnboardingCreated', () => {
   });
 
   it('sends owner welcome and backoffice notification when onboarding is created with owner', async () => {
-    vi.mocked(dbUserReadEmailAndLocale).mockResolvedValueOnce({ email: 'owner@example.com', locale: 'nl' });
+    vi.mocked(dbUserReadEmailAndLocale)
+      .mockResolvedValueOnce({ email: 'owner@example.com', locale: 'nl' })
+      .mockResolvedValueOnce({ email: 'owner@example.com', locale: 'nl' });
 
     await notifyCarOnboardingCreated(
       carOnboarding({

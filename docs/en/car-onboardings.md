@@ -17,7 +17,8 @@ Admins manage preparation in the admin zone under **Onboardings** (list and tabb
 plan, car value, car name & start date, finalize). After preparation, a second menu **Onboarding** holds later steps.
 
 When a car onboarding is created, operations receives an email with a link to it in the admin zone. If an owner is already set at creation, the
-owner also receives a welcome email with a link to continue the public onboarding.
+owner also receives a welcome email with a link to continue the public onboarding. The same owner welcome email is sent when an admin later
+assigns an owner for the first time.
 
 On the list, search also matches the owner's name and email. You can filter the list by owner.
 
