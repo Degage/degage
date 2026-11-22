@@ -62,6 +62,9 @@ Geüploade documentfoto's worden automatisch gecontroleerd voordat ze worden opg
 verwachte documenttype, wordt de upload geweigerd en wordt de gebruiker gevraagd een duidelijke foto te uploaden. De voorzijde van het
 inschrijvingsbewijs kan ook VIN, nummerplaat en datum eerste inschrijving invullen wanneer die velden nog leeg zijn.
 
+Wanneer de eigenaar een roze formulier uploadt of vervangt, krijgt operations een e-mail met een link naar de onboarding. Uploads door een admin
+sturen die e-mail niet.
+
 Deze stap is compleet wanneer merk, brandstoftype en voertuigtype zijn ingesteld, en alle vereiste documenten voor de voertuigsituatie zijn
 geüpload: voor- en achterkant van het inschrijvingsbewijs wanneer de wagen niet gekocht is; keuringsattest bovendien wanneer de wagen ouder is
 dan vier jaar; roze formulier wanneer de wagen gekocht is en niet nieuw; aankoopbewijs wanneer de wagen gekocht is en nieuw. De aankoopprijs

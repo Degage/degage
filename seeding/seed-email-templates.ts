@@ -285,6 +285,42 @@ const carOnboardingPreparationNudgeVariables = {
   },
 } as const;
 
+const carOnboardingPinkFormUploadedNotificationVariables = {
+  en: {
+    SUBJECT: '[Notification] Pink form uploaded — {{{OWNER_EMAIL}}}',
+    PREHEADER: 'An owner uploaded a pink form during car onboarding.',
+    HEADER: 'Internal',
+    HEADING: 'Pink form uploaded',
+    BODY: '{{{OWNER_NAME}}} ({{{OWNER_EMAIL}}}) uploaded a pink form during car onboarding. Open the onboarding in admin to follow up.',
+    BUTTON_TEXT: 'Open in admin',
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.en,
+    FOOTER: 'Reply to this email to contact the owner.',
+  },
+  nl: {
+    SUBJECT: '[Notificatie] Roze formulier geüpload — {{{OWNER_EMAIL}}}',
+    PREHEADER: 'Een eigenaar uploadde een roze formulier tijdens wagenonboarding.',
+    HEADER: 'Intern',
+    HEADING: 'Roze formulier geüpload',
+    BODY: '{{{OWNER_NAME}}} ({{{OWNER_EMAIL}}}) uploadde een roze formulier tijdens wagenonboarding. Open de onboarding in admin om op te volgen.',
+    BUTTON_TEXT: 'Open in admin',
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.nl,
+    FOOTER: 'Antwoord op deze e-mail om de eigenaar te contacteren.',
+  },
+  fr: {
+    SUBJECT: '[Notification] Formulaire rose téléversé — {{{OWNER_EMAIL}}}',
+    PREHEADER: "Un propriétaire a téléversé un formulaire rose pendant l'intégration voiture.",
+    HEADER: 'Interne',
+    HEADING: 'Formulaire rose téléversé',
+    BODY: "{{{OWNER_NAME}}} ({{{OWNER_EMAIL}}}) a téléversé un formulaire rose pendant l'intégration voiture. Ouvrez l'intégration dans l'admin pour le suivi.",
+    BUTTON_TEXT: "Ouvrir dans l'admin",
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.fr,
+    FOOTER: 'Répondez à cet e-mail pour contacter le propriétaire.',
+  },
+} as const;
+
 const templates = [
   { code: TemplatesEnum.VerificationEmail, designId: BUTTON_EMAIL_DESIGN_ALIAS, variables: verificationVariables },
   { code: TemplatesEnum.ResetPasswordEmail, designId: BUTTON_EMAIL_DESIGN_ALIAS, variables: resetPasswordVariables },
@@ -308,6 +344,11 @@ const templates = [
     code: TemplatesEnum.CarOnboardingPreparationNudgeEmail,
     designId: BUTTON_EMAIL_DESIGN_ALIAS,
     variables: carOnboardingPreparationNudgeVariables,
+  },
+  {
+    code: TemplatesEnum.CarOnboardingPinkFormUploadedNotificationEmail,
+    designId: BUTTON_EMAIL_DESIGN_ALIAS,
+    variables: carOnboardingPinkFormUploadedNotificationVariables,
   },
 ] as const;
 

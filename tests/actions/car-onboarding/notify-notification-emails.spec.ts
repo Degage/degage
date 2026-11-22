@@ -1,5 +1,13 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
+vi.mock('@/actions/email-template/send', () => ({
+  sendEmailByCode: vi.fn().mockResolvedValue({ id: 'sent' }),
+}));
+
+vi.mock('@/actions/utils', () => ({
+  getSupportReplyToEmail: () => 'support@example.com',
+}));
+
 vi.mock('@/storage/user/user.read', () => ({
   dbUserReadEmailAndLocale: vi.fn(),
 }));
@@ -12,12 +20,15 @@ vi.mock('@/context/request-context', () => ({
   getRequestLocale: () => getRequestLocaleMock(),
 }));
 
+import { sendEmailByCode } from '@/actions/email-template/send';
 import {
   buildAdminCarOnboardingUrl,
   formatOptionalEuro,
+  notifyCarOnboardingPinkFormUploaded,
   resolveOwnerContact,
   toEmailTemplateLocale,
 } from '@/actions/car-onboarding/notify-notification-emails';
+import { TemplatesEnum } from '@/domain/email-template.model';
 import { dbUserReadEmailAndLocale } from '@/storage/user/user.read';
 import { carOnboarding } from '../../builders/car-onboarding.builder';
 
@@ -73,5 +84,49 @@ describe('notify-notification-emails helpers', () => {
         }),
       ),
     ).resolves.toBeNull();
+  });
+});
+
+describe('notifyCarOnboardingPinkFormUploaded', () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+    getRequestLocaleMock.mockReset();
+    getRequestLocaleMock.mockReturnValue('en');
+  });
+
+  it('sends pink form notification to backoffice', async () => {
+    vi.mocked(dbUserReadEmailAndLocale).mockResolvedValueOnce({ email: 'owner@example.com', locale: 'nl' });
+
+    await notifyCarOnboardingPinkFormUploaded(
+      carOnboarding({
+        id: onboardingId,
+        owner: { id: 'user-1', name: 'Jane Doe' },
+      }),
+    );
+
+    expect(sendEmailByCode).toHaveBeenCalledWith({
+      to: 'support@example.com',
+      code: TemplatesEnum.CarOnboardingPinkFormUploadedNotificationEmail,
+      locale: 'en',
+      variables: {
+        BUTTON_URL: buildAdminCarOnboardingUrl(onboardingId),
+        OWNER_NAME: 'Jane Doe',
+        OWNER_EMAIL: 'owner@example.com',
+      },
+      replyTo: 'owner@example.com',
+    });
+  });
+
+  it('no-ops without owner email', async () => {
+    vi.mocked(dbUserReadEmailAndLocale).mockResolvedValueOnce(null);
+
+    await notifyCarOnboardingPinkFormUploaded(
+      carOnboarding({
+        id: onboardingId,
+        owner: { id: 'user-1', name: 'Jane Doe' },
+      }),
+    );
+
+    expect(sendEmailByCode).not.toHaveBeenCalled();
   });
 });

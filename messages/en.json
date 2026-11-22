@@ -322,7 +322,8 @@
         "simulation-results-support": "Simulation results (support)",
         "simulation-manual-review-email": "Simulation manual review",
         "simulation-manual-review-support": "Simulation manual review (support)",
-        "car-onboarding-preparation-nudge-email": "Car onboarding preparation reminder"
+        "car-onboarding-preparation-nudge-email": "Car onboarding preparation reminder",
+        "car-onboarding-pink-form-uploaded-notification": "Car onboarding pink form uploaded (notification)"
       },
       "actions": {
         "openMenu": "Open menu",

@@ -322,7 +322,8 @@
         "simulation-results-support": "Résultats de simulation (support)",
         "simulation-manual-review-email": "Revue manuelle de simulation",
         "simulation-manual-review-support": "Revue manuelle de simulation (support)",
-        "car-onboarding-preparation-nudge-email": "Rappel de préparation d'intégration voiture"
+        "car-onboarding-preparation-nudge-email": "Rappel de préparation d'intégration voiture",
+        "car-onboarding-pink-form-uploaded-notification": "Intégration voiture formulaire rose téléversé (notification)"
       },
       "actions": {
         "openMenu": "Ouvrir le menu",

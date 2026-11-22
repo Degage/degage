@@ -322,7 +322,8 @@
         "simulation-results-support": "Simulatieresultaten (support)",
         "simulation-manual-review-email": "Simulatie manuele review",
         "simulation-manual-review-support": "Simulatie manuele review (support)",
-        "car-onboarding-preparation-nudge-email": "Herinnering voorbereiding wagenonboarding"
+        "car-onboarding-preparation-nudge-email": "Herinnering voorbereiding wagenonboarding",
+        "car-onboarding-pink-form-uploaded-notification": "Wagenonboarding roze formulier geüpload (notificatie)"
       },
       "actions": {
         "openMenu": "Menu openen",
