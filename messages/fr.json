@@ -324,7 +324,9 @@
         "simulation-manual-review-support": "Revue manuelle de simulation (support)",
         "car-onboarding-preparation-nudge-email": "Rappel de préparation d'intégration voiture",
         "car-onboarding-pink-form-uploaded-notification": "Intégration voiture formulaire rose téléversé (notification)",
-        "car-onboarding-car-value-counter-notification": "Intégration voiture contre-proposition valeur (notification)"
+        "car-onboarding-car-value-counter-notification": "Intégration voiture contre-proposition valeur (notification)",
+        "car-onboarding-created-email": "Intégration voiture créée",
+        "car-onboarding-created-notification": "Intégration voiture créée (notification)"
       },
       "actions": {
         "openMenu": "Ouvrir le menu",

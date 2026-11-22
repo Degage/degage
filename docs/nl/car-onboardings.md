@@ -18,6 +18,9 @@ Admins beheren de voorbereiding in de adminzone onder **Onboardings** (lijst en 
 verzekering, pechverhelping, waarde, startdatum autodelen, afronden). Na de voorbereiding staat een tweede menu **De instap** voor latere
 stappen.
 
+Wanneer een wagenonboarding wordt aangemaakt, krijgt operations een e-mail met een link ernaar in de adminzone. Als er bij het aanmaken al een
+eigenaar is, krijgt die ook een welkomstmail met een link om de publieke onboarding voort te zetten.
+
 Op de lijst zoekt de zoekfunctie ook op naam en e-mail van de eigenaar. Je kunt de lijst ook filteren op eigenaar.
 
 ### Eigenaar

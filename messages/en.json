@@ -324,7 +324,9 @@
         "simulation-manual-review-support": "Simulation manual review (support)",
         "car-onboarding-preparation-nudge-email": "Car onboarding preparation reminder",
         "car-onboarding-pink-form-uploaded-notification": "Car onboarding pink form uploaded (notification)",
-        "car-onboarding-car-value-counter-notification": "Car onboarding car value counter (notification)"
+        "car-onboarding-car-value-counter-notification": "Car onboarding car value counter (notification)",
+        "car-onboarding-created-email": "Car onboarding created",
+        "car-onboarding-created-notification": "Car onboarding created (notification)"
       },
       "actions": {
         "openMenu": "Open menu",

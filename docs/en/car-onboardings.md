@@ -16,6 +16,9 @@ required input is complete and whether further edits are allowed.
 Admins manage preparation in the admin zone under **Onboardings** (list and tabbed detail: owner, user info, car info, insurer, road assistance
 plan, car value, car name & start date, finalize). After preparation, a second menu **Onboarding** holds later steps.
 
+When a car onboarding is created, operations receives an email with a link to it in the admin zone. If an owner is already set at creation, the
+owner also receives a welcome email with a link to continue the public onboarding.
+
 On the list, search also matches the owner's name and email. You can filter the list by owner.
 
 ### Owner

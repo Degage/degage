@@ -25,10 +25,12 @@ import {
   buildAdminCarOnboardingUrl,
   formatOptionalEuro,
   notifyCarOnboardingCarValueCounter,
+  notifyCarOnboardingCreated,
   notifyCarOnboardingPinkFormUploaded,
   resolveOwnerContact,
   toEmailTemplateLocale,
 } from '@/actions/car-onboarding/notify-notification-emails';
+import { buildPublicCarOnboardingUrl } from '@/actions/car-onboarding/nudge-preparation';
 import { TemplatesEnum } from '@/domain/email-template.model';
 import { dbUserReadEmailAndLocale } from '@/storage/user/user.read';
 import { carOnboarding } from '../../builders/car-onboarding.builder';
@@ -188,5 +190,63 @@ describe('notifyCarOnboardingCarValueCounter', () => {
         }),
       }),
     );
+  });
+});
+
+describe('notifyCarOnboardingCreated', () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+    getRequestLocaleMock.mockReset();
+    getRequestLocaleMock.mockReturnValue('en');
+  });
+
+  it('sends owner welcome and backoffice notification when onboarding is created with owner', async () => {
+    vi.mocked(dbUserReadEmailAndLocale).mockResolvedValueOnce({ email: 'owner@example.com', locale: 'nl' });
+
+    await notifyCarOnboardingCreated(
+      carOnboarding({
+        id: onboardingId,
+        owner: { id: 'user-1', name: 'Jane Doe' },
+      }),
+    );
+
+    expect(sendEmailByCode).toHaveBeenCalledTimes(2);
+    expect(sendEmailByCode).toHaveBeenNthCalledWith(1, {
+      to: 'owner@example.com',
+      code: TemplatesEnum.CarOnboardingCreatedEmail,
+      locale: 'nl',
+      variables: {
+        BUTTON_URL: buildPublicCarOnboardingUrl(onboardingId),
+      },
+      replyTo: 'support@example.com',
+    });
+    expect(sendEmailByCode).toHaveBeenNthCalledWith(2, {
+      to: 'support@example.com',
+      code: TemplatesEnum.CarOnboardingCreatedNotificationEmail,
+      locale: 'en',
+      variables: {
+        BUTTON_URL: buildAdminCarOnboardingUrl(onboardingId),
+        OWNER_NAME: 'Jane Doe',
+        OWNER_EMAIL: 'owner@example.com',
+      },
+      replyTo: 'owner@example.com',
+    });
+  });
+
+  it('sends only backoffice notification with dashes when onboarding has no owner', async () => {
+    await notifyCarOnboardingCreated(carOnboarding({ id: onboardingId, owner: null }));
+
+    expect(dbUserReadEmailAndLocale).not.toHaveBeenCalled();
+    expect(sendEmailByCode).toHaveBeenCalledTimes(1);
+    expect(sendEmailByCode).toHaveBeenCalledWith({
+      to: 'support@example.com',
+      code: TemplatesEnum.CarOnboardingCreatedNotificationEmail,
+      locale: 'en',
+      variables: {
+        BUTTON_URL: buildAdminCarOnboardingUrl(onboardingId),
+        OWNER_NAME: '—',
+        OWNER_EMAIL: '—',
+      },
+    });
   });
 });

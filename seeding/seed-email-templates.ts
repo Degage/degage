@@ -357,6 +357,78 @@ const carOnboardingCarValueCounterNotificationVariables = {
   },
 } as const;
 
+const carOnboardingCreatedVariables = {
+  en: {
+    SUBJECT: 'Your car onboarding has started',
+    PREHEADER: 'Continue your car onboarding at Dégage.',
+    HEADER: 'Car onboarding',
+    HEADING: 'Your car onboarding has started',
+    BODY: 'We have started your car onboarding at Dégage. Continue with the steps so we can get your car ready.',
+    BUTTON_TEXT: 'Continue onboarding',
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.en,
+    FOOTER: 'Questions? Reply to this email.',
+  },
+  nl: {
+    SUBJECT: 'Je wagenonboarding is gestart',
+    PREHEADER: 'Ga verder met je wagenonboarding bij Dégage.',
+    HEADER: 'Wagenonboarding',
+    HEADING: 'Je wagenonboarding is gestart',
+    BODY: 'We hebben je wagenonboarding bij Dégage gestart. Ga verder met de stappen zodat we je wagen klaar kunnen maken.',
+    BUTTON_TEXT: 'Verdergaan met onboarding',
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.nl,
+    FOOTER: 'Vragen? Antwoord op deze e-mail.',
+  },
+  fr: {
+    SUBJECT: "L'intégration de votre voiture a commencé",
+    PREHEADER: "Poursuivez l'intégration de votre voiture chez Dégage.",
+    HEADER: 'Intégration voiture',
+    HEADING: "L'intégration de votre voiture a commencé",
+    BODY: "Nous avons démarré l'intégration de votre voiture chez Dégage. Poursuivez les étapes pour que nous puissions préparer votre voiture.",
+    BUTTON_TEXT: "Continuer l'intégration",
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.fr,
+    FOOTER: 'Des questions ? Répondez à cet e-mail.',
+  },
+} as const;
+
+const carOnboardingCreatedNotificationVariables = {
+  en: {
+    SUBJECT: '[Notification] New car onboarding — {{{OWNER_EMAIL}}}',
+    PREHEADER: 'A car onboarding was created.',
+    HEADER: 'Internal',
+    HEADING: 'New car onboarding',
+    BODY: 'A car onboarding was created for {{{OWNER_NAME}}} ({{{OWNER_EMAIL}}}). Open it in admin to follow up.',
+    BUTTON_TEXT: 'Open in admin',
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.en,
+    FOOTER: 'Reply to this email to contact the owner when an address is available.',
+  },
+  nl: {
+    SUBJECT: '[Notificatie] Nieuwe wagenonboarding — {{{OWNER_EMAIL}}}',
+    PREHEADER: 'Er is een wagenonboarding aangemaakt.',
+    HEADER: 'Intern',
+    HEADING: 'Nieuwe wagenonboarding',
+    BODY: 'Er is een wagenonboarding aangemaakt voor {{{OWNER_NAME}}} ({{{OWNER_EMAIL}}}). Open die in admin om op te volgen.',
+    BUTTON_TEXT: 'Open in admin',
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.nl,
+    FOOTER: 'Antwoord op deze e-mail om de eigenaar te contacteren wanneer er een adres is.',
+  },
+  fr: {
+    SUBJECT: '[Notification] Nouvelle intégration voiture — {{{OWNER_EMAIL}}}',
+    PREHEADER: 'Une intégration voiture a été créée.',
+    HEADER: 'Interne',
+    HEADING: 'Nouvelle intégration voiture',
+    BODY: "Une intégration voiture a été créée pour {{{OWNER_NAME}}} ({{{OWNER_EMAIL}}}). Ouvrez-la dans l'admin pour le suivi.",
+    BUTTON_TEXT: "Ouvrir dans l'admin",
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.fr,
+    FOOTER: "Répondez à cet e-mail pour contacter le propriétaire lorsqu'une adresse est disponible.",
+  },
+} as const;
+
 const templates = [
   { code: TemplatesEnum.VerificationEmail, designId: BUTTON_EMAIL_DESIGN_ALIAS, variables: verificationVariables },
   { code: TemplatesEnum.ResetPasswordEmail, designId: BUTTON_EMAIL_DESIGN_ALIAS, variables: resetPasswordVariables },
@@ -390,6 +462,16 @@ const templates = [
     code: TemplatesEnum.CarOnboardingCarValueCounterNotificationEmail,
     designId: BUTTON_EMAIL_DESIGN_ALIAS,
     variables: carOnboardingCarValueCounterNotificationVariables,
+  },
+  {
+    code: TemplatesEnum.CarOnboardingCreatedEmail,
+    designId: BUTTON_EMAIL_DESIGN_ALIAS,
+    variables: carOnboardingCreatedVariables,
+  },
+  {
+    code: TemplatesEnum.CarOnboardingCreatedNotificationEmail,
+    designId: BUTTON_EMAIL_DESIGN_ALIAS,
+    variables: carOnboardingCreatedNotificationVariables,
   },
 ] as const;
 

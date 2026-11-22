@@ -18,6 +18,9 @@ Les admins gèrent la préparation dans la zone admin **Onboardings** (liste et 
 véhicule, assurance, assistance routière, valeur, date de début du partage, finaliser). Après la préparation, un second menu **Intégration**
 regroupe les étapes suivantes.
 
+Lorsqu'une intégration voiture est créée, operations reçoit un e-mail avec un lien vers celle-ci dans la zone admin. Si un propriétaire est déjà
+défini à la création, il reçoit aussi un e-mail de bienvenue avec un lien pour poursuivre l'intégration publique.
+
 Dans la liste, la recherche porte aussi sur le nom et l'e-mail du propriétaire. Vous pouvez aussi filtrer la liste par propriétaire.
 
 ### Propriétaire

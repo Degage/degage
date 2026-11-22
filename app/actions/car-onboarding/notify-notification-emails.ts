@@ -1,3 +1,4 @@
+import { buildPublicCarOnboardingUrl } from '@/actions/car-onboarding/nudge-preparation';
 import { sendEmailByCode } from '@/actions/email-template/send';
 import { getSupportReplyToEmail } from '@/actions/utils';
 import { getRequestLocale } from '@/context/request-context';
@@ -69,5 +70,35 @@ export async function notifyCarOnboardingCarValueCounter(onboarding: CarOnboardi
       COUNTER_MESSAGE: message && message.length > 0 ? message : '—',
     },
     replyTo: owner.email,
+  });
+}
+
+export async function notifyCarOnboardingCreated(onboarding: CarOnboarding): Promise<void> {
+  if (onboarding.id == null) return;
+
+  const owner = await resolveOwnerContact(onboarding);
+
+  if (owner != null) {
+    await sendEmailByCode({
+      to: owner.email,
+      code: TemplatesEnum.CarOnboardingCreatedEmail,
+      locale: toEmailTemplateLocale(owner.locale),
+      variables: {
+        BUTTON_URL: buildPublicCarOnboardingUrl(onboarding.id),
+      },
+      replyTo: getSupportReplyToEmail(),
+    });
+  }
+
+  await sendEmailByCode({
+    to: getSupportReplyToEmail(),
+    code: TemplatesEnum.CarOnboardingCreatedNotificationEmail,
+    locale: toEmailTemplateLocale(),
+    variables: {
+      BUTTON_URL: buildAdminCarOnboardingUrl(onboarding.id),
+      OWNER_NAME: owner?.name ?? '—',
+      OWNER_EMAIL: owner?.email ?? '—',
+    },
+    ...(owner != null ? { replyTo: owner.email } : {}),
   });
 }

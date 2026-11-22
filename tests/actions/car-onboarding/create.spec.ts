@@ -12,7 +12,16 @@ vi.mock('@/actions/car-onboarding/read', () => ({
   readCarOnboarding: vi.fn(),
 }));
 
+vi.mock('@/actions/car-onboarding/notify-notification-emails', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/actions/car-onboarding/notify-notification-emails')>();
+  return {
+    ...actual,
+    notifyCarOnboardingCreated: vi.fn(),
+  };
+});
+
 import { createCarOnboarding } from '@/actions/car-onboarding/create';
+import { notifyCarOnboardingCreated } from '@/actions/car-onboarding/notify-notification-emails';
 import { readCarOnboarding } from '@/actions/car-onboarding/read';
 import { readSimulation } from '@/actions/simulation/read';
 import { CarOnboardingForbiddenError } from '@/actions/car-onboarding/car-onboarding-forbidden.error';
@@ -31,11 +40,12 @@ describe('createCarOnboarding', () => {
   const simulationId = '550e8400-e29b-41d4-a716-446655440010';
   const createdId = '550e8400-e29b-41d4-a716-446655440000';
 
-  it('creates from simulation with owner set to caller', async () => {
+  it('creates from simulation with owner set to caller and notifies', async () => {
     const sim = simulation({ id: simulationId, isPurchased: true });
+    const createdOnboarding = carOnboarding({ id: createdId, owner: { id: ownerId, name: 'User' } });
     vi.mocked(readSimulation).mockResolvedValueOnce(sim);
     vi.mocked(dbCarOnboardingCreate).mockImplementationOnce(async (draft) => carOnboarding({ ...draft, id: createdId }));
-    vi.mocked(readCarOnboarding).mockResolvedValueOnce(carOnboarding({ id: createdId, owner: { id: ownerId, name: 'User' } }));
+    vi.mocked(readCarOnboarding).mockResolvedValueOnce(createdOnboarding);
 
     const result = await createCarOnboarding({ simulation: { id: simulationId } }, mockUser);
 
@@ -49,6 +59,7 @@ describe('createCarOnboarding', () => {
       }),
     );
     expect(readCarOnboarding).toHaveBeenCalledWith(createdId);
+    expect(notifyCarOnboardingCreated).toHaveBeenCalledWith(createdOnboarding);
     expect(result.id).toBe(createdId);
   });
 
@@ -66,11 +77,13 @@ describe('createCarOnboarding', () => {
         owner: { id: nonUuidCaller.id },
       }),
     );
+    expect(notifyCarOnboardingCreated).toHaveBeenCalled();
   });
 
-  it('allows admin to create empty shell without simulation', async () => {
+  it('allows admin to create empty shell without simulation and still notifies', async () => {
+    const createdOnboarding = carOnboarding({ id: createdId });
     vi.mocked(dbCarOnboardingCreate).mockImplementationOnce(async (draft) => carOnboarding({ ...draft, id: createdId }));
-    vi.mocked(readCarOnboarding).mockResolvedValueOnce(carOnboarding({ id: createdId }));
+    vi.mocked(readCarOnboarding).mockResolvedValueOnce(createdOnboarding);
 
     const result = await createCarOnboarding({}, mockAdmin);
 
@@ -82,6 +95,7 @@ describe('createCarOnboarding', () => {
         statusInPreparation: 'open',
       }),
     );
+    expect(notifyCarOnboardingCreated).toHaveBeenCalledWith(createdOnboarding);
     expect(result.id).toBe(createdId);
   });
 
@@ -121,6 +135,7 @@ describe('createCarOnboarding', () => {
   it('throws when non-admin creates without simulation', async () => {
     await expect(createCarOnboarding({}, mockUser)).rejects.toThrow(CarOnboardingForbiddenError);
     expect(dbCarOnboardingCreate).not.toHaveBeenCalled();
+    expect(notifyCarOnboardingCreated).not.toHaveBeenCalled();
   });
 
   it('propagates when simulation is not found', async () => {
@@ -128,5 +143,6 @@ describe('createCarOnboarding', () => {
 
     await expect(createCarOnboarding({ simulation: { id: simulationId } }, mockUser)).rejects.toEqual({ code: 'P2025' });
     expect(dbCarOnboardingCreate).not.toHaveBeenCalled();
+    expect(notifyCarOnboardingCreated).not.toHaveBeenCalled();
   });
 });
