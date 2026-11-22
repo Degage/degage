@@ -48,3 +48,26 @@ export async function notifyCarOnboardingPinkFormUploaded(onboarding: CarOnboard
     replyTo: owner.email,
   });
 }
+
+export async function notifyCarOnboardingCarValueCounter(onboarding: CarOnboarding): Promise<void> {
+  if (onboarding.id == null) return;
+  const owner = await resolveOwnerContact(onboarding);
+  if (owner == null) return;
+
+  const message = onboarding.carValueCounterProposalMessage?.trim();
+
+  await sendEmailByCode({
+    to: getSupportReplyToEmail(),
+    code: TemplatesEnum.CarOnboardingCarValueCounterNotificationEmail,
+    locale: toEmailTemplateLocale(),
+    variables: {
+      BUTTON_URL: buildAdminCarOnboardingUrl(onboarding.id),
+      OWNER_NAME: owner.name,
+      OWNER_EMAIL: owner.email,
+      PROPOSED_VALUE: formatOptionalEuro(onboarding.carValue),
+      COUNTER_VALUE: formatOptionalEuro(onboarding.carValueCounterProposal),
+      COUNTER_MESSAGE: message && message.length > 0 ? message : '—',
+    },
+    replyTo: owner.email,
+  });
+}

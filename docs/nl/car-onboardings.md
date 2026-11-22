@@ -135,6 +135,9 @@ Wijzigt een admin de waarde terwijl de status **Todo** of **Counter** is, dan ga
 De eigenaar kan een tegenvoorstel (waarde en optioneel bericht) indienen wanneer de status **Proposal** is; de status wordt dan **Counter**. De
 eigenaar kan akkoord gaan wanneer de status **Proposal** is; de status wordt dan **Resolved**.
 
+Wanneer de eigenaar een tegenvoorstel indient, krijgt operations een e-mail met de voorgestelde waarde, het tegenvoorstel, het bericht van de
+eigenaar en een link naar de onboarding. Wijzigingen door een admin sturen die e-mail niet.
+
 Admins kunnen het akkoord overschrijven op het tabblad waarde wanneer de eigenaar expliciet buiten de normale app-flow akkoord is gegaan.
 
 Deze stap is compleet wanneer de waarde-status **Resolved** is.

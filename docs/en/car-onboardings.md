@@ -148,6 +148,9 @@ When an admin changes the car value while status is **Todo** or **Counter**, the
 The owner can submit a counter proposal (value and optional message) while status is **Proposal**, which moves status to **Counter**. The owner
 can agree while status is **Proposal**, which moves status to **Resolved**.
 
+When the owner submits a counter proposal, operations receives an email with the proposed value, the counter value, the owner's message, and a
+link to the onboarding. Changes made by an admin do not send that email.
+
 Admins can overrule the agreement on the car value tab when the owner has explicitly agreed outside the normal in-app flow.
 
 This step is complete when car value status is **Resolved**.

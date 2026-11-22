@@ -137,6 +137,9 @@ Lorsqu'un admin modifie la valeur alors que le statut est **Todo** ou **Counter*
 Le propriétaire peut soumettre une contre-proposition (valeur et message optionnel) lorsque le statut est **Proposal** ; le statut devient
 **Counter**. Le propriétaire peut accepter lorsque le statut est **Proposal** ; le statut devient **Resolved**.
 
+Lorsque le propriétaire soumet une contre-proposition, operations reçoit un e-mail avec la valeur proposée, la contre-proposition, le message du
+propriétaire et un lien vers l'intégration. Les modifications faites par un admin n'envoient pas cet e-mail.
+
 Les admins peuvent outrepasser l'accord sur l'onglet valeur lorsque le propriétaire a explicitement accepté en dehors du flux normal dans
 l'application.
 

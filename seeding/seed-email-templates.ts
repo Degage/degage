@@ -321,6 +321,42 @@ const carOnboardingPinkFormUploadedNotificationVariables = {
   },
 } as const;
 
+const carOnboardingCarValueCounterNotificationVariables = {
+  en: {
+    SUBJECT: '[Notification] Car value counter — {{{OWNER_EMAIL}}}',
+    PREHEADER: 'An owner submitted a car value counter proposal.',
+    HEADER: 'Internal',
+    HEADING: 'Car value counter proposal',
+    BODY: '{{{OWNER_NAME}}} ({{{OWNER_EMAIL}}}) submitted a counter proposal during car onboarding. Proposed value: {{{PROPOSED_VALUE}}}. Counter value: {{{COUNTER_VALUE}}}. Message: {{{COUNTER_MESSAGE}}}. Open the onboarding in admin to respond.',
+    BUTTON_TEXT: 'Open in admin',
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.en,
+    FOOTER: 'Reply to this email to contact the owner.',
+  },
+  nl: {
+    SUBJECT: '[Notificatie] Tegenvoorstel wagenwaarde — {{{OWNER_EMAIL}}}',
+    PREHEADER: 'Een eigenaar diende een tegenvoorstel voor de wagenwaarde in.',
+    HEADER: 'Intern',
+    HEADING: 'Tegenvoorstel wagenwaarde',
+    BODY: '{{{OWNER_NAME}}} ({{{OWNER_EMAIL}}}) diende een tegenvoorstel in tijdens wagenonboarding. Voorgestelde waarde: {{{PROPOSED_VALUE}}}. Tegenvoorstel: {{{COUNTER_VALUE}}}. Bericht: {{{COUNTER_MESSAGE}}}. Open de onboarding in admin om te antwoorden.',
+    BUTTON_TEXT: 'Open in admin',
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.nl,
+    FOOTER: 'Antwoord op deze e-mail om de eigenaar te contacteren.',
+  },
+  fr: {
+    SUBJECT: '[Notification] Contre-proposition valeur — {{{OWNER_EMAIL}}}',
+    PREHEADER: 'Un propriétaire a soumis une contre-proposition de valeur.',
+    HEADER: 'Interne',
+    HEADING: 'Contre-proposition de valeur',
+    BODY: "{{{OWNER_NAME}}} ({{{OWNER_EMAIL}}}) a soumis une contre-proposition pendant l'intégration voiture. Valeur proposée : {{{PROPOSED_VALUE}}}. Contre-proposition : {{{COUNTER_VALUE}}}. Message : {{{COUNTER_MESSAGE}}}. Ouvrez l'intégration dans l'admin pour répondre.",
+    BUTTON_TEXT: "Ouvrir dans l'admin",
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.fr,
+    FOOTER: 'Répondez à cet e-mail pour contacter le propriétaire.',
+  },
+} as const;
+
 const templates = [
   { code: TemplatesEnum.VerificationEmail, designId: BUTTON_EMAIL_DESIGN_ALIAS, variables: verificationVariables },
   { code: TemplatesEnum.ResetPasswordEmail, designId: BUTTON_EMAIL_DESIGN_ALIAS, variables: resetPasswordVariables },
@@ -349,6 +385,11 @@ const templates = [
     code: TemplatesEnum.CarOnboardingPinkFormUploadedNotificationEmail,
     designId: BUTTON_EMAIL_DESIGN_ALIAS,
     variables: carOnboardingPinkFormUploadedNotificationVariables,
+  },
+  {
+    code: TemplatesEnum.CarOnboardingCarValueCounterNotificationEmail,
+    designId: BUTTON_EMAIL_DESIGN_ALIAS,
+    variables: carOnboardingCarValueCounterNotificationVariables,
   },
 ] as const;
 
