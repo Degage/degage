@@ -18,6 +18,10 @@ Admins beheren de voorbereiding in de adminzone onder **Onboardings** (lijst en 
 verzekering, pechverhelping, waarde, startdatum autodelen, afronden). Na de voorbereiding staat een tweede menu **De instap** voor latere
 stappen.
 
+Wanneer een wagenonboarding wordt aangemaakt, krijgt operations een e-mail met een link ernaar in de adminzone. Als er bij het aanmaken al een
+eigenaar is, krijgt die ook een welkomstmail met een link om de publieke onboarding voort te zetten. Dezelfde welkomstmail gaat uit wanneer een
+admin later voor het eerst een eigenaar toewijst.
+
 Op de lijst zoekt de zoekfunctie ook op naam en e-mail van de eigenaar. Je kunt de lijst ook filteren op eigenaar.
 
 ### Eigenaar
@@ -61,6 +65,9 @@ keuringsbewijs, roze formulier en aankoopbewijs.
 Geüploade documentfoto's worden automatisch gecontroleerd voordat ze worden opgeslagen. Als een foto onduidelijk is of niet overeenkomt met het
 verwachte documenttype, wordt de upload geweigerd en wordt de gebruiker gevraagd een duidelijke foto te uploaden. De voorzijde van het
 inschrijvingsbewijs kan ook VIN, nummerplaat en datum eerste inschrijving invullen wanneer die velden nog leeg zijn.
+
+Wanneer de eigenaar een roze formulier uploadt of vervangt, krijgt operations een e-mail met een link naar de onboarding. Uploads door een admin
+sturen die e-mail niet.
 
 Deze stap is compleet wanneer merk, brandstoftype en voertuigtype zijn ingesteld, en alle vereiste documenten voor de voertuigsituatie zijn
 geüpload: voor- en achterkant van het inschrijvingsbewijs wanneer de wagen niet gekocht is; keuringsattest bovendien wanneer de wagen ouder is
@@ -131,6 +138,9 @@ Wijzigt een admin de waarde terwijl de status **Todo** of **Counter** is, dan ga
 
 De eigenaar kan een tegenvoorstel (waarde en optioneel bericht) indienen wanneer de status **Proposal** is; de status wordt dan **Counter**. De
 eigenaar kan akkoord gaan wanneer de status **Proposal** is; de status wordt dan **Resolved**.
+
+Wanneer de eigenaar een tegenvoorstel indient, krijgt operations een e-mail met de voorgestelde waarde, het tegenvoorstel, het bericht van de
+eigenaar en een link naar de onboarding. Wijzigingen door een admin sturen die e-mail niet.
 
 Admins kunnen het akkoord overschrijven op het tabblad waarde wanneer de eigenaar expliciet buiten de normale app-flow akkoord is gegaan.
 

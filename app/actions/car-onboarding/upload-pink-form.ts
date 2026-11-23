@@ -1,5 +1,6 @@
 import { DocumentType, assertRegistrationCertificateUpload } from '@/domain/document.model';
 import type { UserWithRole } from '@/domain/role.model';
+import { isAdmin } from '@/domain/role.utils';
 import { analyzePinkForm } from '@/actions/document/analyze-pink-form';
 import { createDocumentWithUpload } from '@/actions/document/create-with-upload';
 import { DocumentNotRecognizedError } from '@/actions/document/document-not-recognized.error';
@@ -9,6 +10,7 @@ import {
   assertCarOnboardingNotLocked,
   assertCarOnboardingPartialUpdateAllowed,
 } from '@/actions/car-onboarding/preparation';
+import { notifyCarOnboardingPinkFormUploaded } from '@/actions/car-onboarding/notify-notification-emails';
 import { readCarOnboarding } from '@/actions/car-onboarding/read';
 import { saveCarOnboardingWithPreparationCheck } from '@/actions/car-onboarding/save-with-preparation';
 
@@ -41,6 +43,9 @@ export const uploadCarOnboardingPinkForm = async (id: string, file: PinkFormUplo
       sizeBytes: file.sizeBytes,
       body: file.body,
     });
+    if (!isAdmin(user)) {
+      await notifyCarOnboardingPinkFormUploaded(existing);
+    }
     return;
   }
 
@@ -52,8 +57,12 @@ export const uploadCarOnboardingPinkForm = async (id: string, file: PinkFormUplo
     body: file.body,
   });
 
-  await saveCarOnboardingWithPreparationCheck({
+  const saved = await saveCarOnboardingWithPreparationCheck({
     ...existing,
     pinkForm: { id: created.id! },
   });
+
+  if (!isAdmin(user)) {
+    await notifyCarOnboardingPinkFormUploaded(saved);
+  }
 };

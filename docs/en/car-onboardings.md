@@ -16,6 +16,10 @@ required input is complete and whether further edits are allowed.
 Admins manage preparation in the admin zone under **Onboardings** (list and tabbed detail: owner, user info, car info, insurer, road assistance
 plan, car value, car name & start date, finalize). After preparation, a second menu **Onboarding** holds later steps.
 
+When a car onboarding is created, operations receives an email with a link to it in the admin zone. If an owner is already set at creation, the
+owner also receives a welcome email with a link to continue the public onboarding. The same owner welcome email is sent when an admin later
+assigns an owner for the first time.
+
 On the list, search also matches the owner's name and email. You can filter the list by owner.
 
 ### Owner
@@ -76,6 +80,9 @@ and proof of purchase.
 Uploaded document images are checked automatically before they are saved. If a photo is unclear or does not match the expected document type,
 the upload is rejected and the user is asked to upload a clear photo. The registration certificate front can also prefill VIN, licence plate,
 and first registration date when those fields are still empty. A proof of purchase must show the purchase price including VAT.
+
+When the owner uploads or replaces a pink form, operations receives an email with a link to the onboarding. Uploads done by an admin do not send
+that email.
 
 This step is complete when brand, fuel type, and car type are all set, and all required documents for the car situation are uploaded:
 registration certificate front and back when the car was not purchased; inspection certificate additionally when the car is older than four
@@ -144,6 +151,9 @@ When an admin changes the car value while status is **Todo** or **Counter**, the
 
 The owner can submit a counter proposal (value and optional message) while status is **Proposal**, which moves status to **Counter**. The owner
 can agree while status is **Proposal**, which moves status to **Resolved**.
+
+When the owner submits a counter proposal, operations receives an email with the proposed value, the counter value, the owner's message, and a
+link to the onboarding. Changes made by an admin do not send that email.
 
 Admins can overrule the agreement on the car value tab when the owner has explicitly agreed outside the normal in-app flow.
 

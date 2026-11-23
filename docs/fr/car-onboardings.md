@@ -18,6 +18,10 @@ Les admins gèrent la préparation dans la zone admin **Onboardings** (liste et 
 véhicule, assurance, assistance routière, valeur, date de début du partage, finaliser). Après la préparation, un second menu **Intégration**
 regroupe les étapes suivantes.
 
+Lorsqu'une intégration voiture est créée, operations reçoit un e-mail avec un lien vers celle-ci dans la zone admin. Si un propriétaire est déjà
+défini à la création, il reçoit aussi un e-mail de bienvenue avec un lien pour poursuivre l'intégration publique. Le même e-mail de bienvenue
+est envoyé lorsqu'un admin assigne un propriétaire pour la première fois plus tard.
+
 Dans la liste, la recherche porte aussi sur le nom et l'e-mail du propriétaire. Vous pouvez aussi filtrer la liste par propriétaire.
 
 ### Propriétaire
@@ -62,6 +66,9 @@ Les images de documents téléversées sont vérifiées automatiquement avant d'
 type de document attendu, le téléversement est refusé et l'utilisateur est invité à téléverser une photo nette. Le recto du certificat
 d'immatriculation peut aussi préremplir le VIN, la plaque d'immatriculation et la date de première immatriculation lorsque ces champs sont
 encore vides.
+
+Lorsque le propriétaire téléverse ou remplace un formulaire rose, operations reçoit un e-mail avec un lien vers l'intégration. Les
+téléversements faits par un admin n'envoient pas cet e-mail.
 
 Cette étape est complète lorsque la marque, le type de carburant et le type de véhicule sont tous définis, et que tous les documents requis pour
 la situation du véhicule sont téléversés : certificat d'immatriculation recto et verso lorsque le véhicule n'a pas été acheté ; certificat de
@@ -133,6 +140,9 @@ Lorsqu'un admin modifie la valeur alors que le statut est **Todo** ou **Counter*
 
 Le propriétaire peut soumettre une contre-proposition (valeur et message optionnel) lorsque le statut est **Proposal** ; le statut devient
 **Counter**. Le propriétaire peut accepter lorsque le statut est **Proposal** ; le statut devient **Resolved**.
+
+Lorsque le propriétaire soumet une contre-proposition, operations reçoit un e-mail avec la valeur proposée, la contre-proposition, le message du
+propriétaire et un lien vers l'intégration. Les modifications faites par un admin n'envoient pas cet e-mail.
 
 Les admins peuvent outrepasser l'accord sur l'onglet valeur lorsque le propriétaire a explicitement accepté en dehors du flux normal dans
 l'application.

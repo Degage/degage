@@ -8,6 +8,10 @@ export enum TemplatesEnum {
   SimulationManualReviewEmail = 'simulation-manual-review-email',
   SimulationManualReviewSupportEmail = 'simulation-manual-review-support',
   CarOnboardingPreparationNudgeEmail = 'car-onboarding-preparation-nudge-email',
+  CarOnboardingPinkFormUploadedNotificationEmail = 'car-onboarding-pink-form-uploaded-notification',
+  CarOnboardingCarValueCounterNotificationEmail = 'car-onboarding-car-value-counter-notification',
+  CarOnboardingCreatedEmail = 'car-onboarding-created-email',
+  CarOnboardingCreatedNotificationEmail = 'car-onboarding-created-notification',
 }
 
 export const emailTemplateCodeValues = [
@@ -18,6 +22,10 @@ export const emailTemplateCodeValues = [
   TemplatesEnum.SimulationManualReviewEmail,
   TemplatesEnum.SimulationManualReviewSupportEmail,
   TemplatesEnum.CarOnboardingPreparationNudgeEmail,
+  TemplatesEnum.CarOnboardingPinkFormUploadedNotificationEmail,
+  TemplatesEnum.CarOnboardingCarValueCounterNotificationEmail,
+  TemplatesEnum.CarOnboardingCreatedEmail,
+  TemplatesEnum.CarOnboardingCreatedNotificationEmail,
 ] as const;
 
 export const emailTemplateCodeSchema = z.enum(emailTemplateCodeValues);

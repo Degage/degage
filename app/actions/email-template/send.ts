@@ -37,6 +37,7 @@ export type SendEmailByCodeOptions = {
   subject?: string;
   headers?: Record<string, string>;
   replyTo?: string | string[];
+  throwOnError?: boolean;
 };
 
 export const sendEmailByCode = async (options: SendEmailByCodeOptions): Promise<{ id: string | null }> => {
@@ -59,5 +60,6 @@ export const sendEmailByCode = async (options: SendEmailByCodeOptions): Promise<
     subject,
     headers: options.headers,
     replyTo: options.replyTo,
+    throwOnError: options.throwOnError,
   });
 };

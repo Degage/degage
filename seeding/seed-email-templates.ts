@@ -285,6 +285,150 @@ const carOnboardingPreparationNudgeVariables = {
   },
 } as const;
 
+const carOnboardingPinkFormUploadedNotificationVariables = {
+  en: {
+    SUBJECT: '[Notification] Pink form uploaded — {{{OWNER_EMAIL}}}',
+    PREHEADER: 'An owner uploaded a pink form during car onboarding.',
+    HEADER: 'Internal',
+    HEADING: 'Pink form uploaded',
+    BODY: '{{{OWNER_NAME}}} ({{{OWNER_EMAIL}}}) uploaded a pink form during car onboarding. Open the onboarding in admin to follow up.',
+    BUTTON_TEXT: 'Open in admin',
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.en,
+    FOOTER: 'Reply to this email to contact the owner.',
+  },
+  nl: {
+    SUBJECT: '[Notificatie] Roze formulier geüpload — {{{OWNER_EMAIL}}}',
+    PREHEADER: 'Een eigenaar uploadde een roze formulier tijdens wagenonboarding.',
+    HEADER: 'Intern',
+    HEADING: 'Roze formulier geüpload',
+    BODY: '{{{OWNER_NAME}}} ({{{OWNER_EMAIL}}}) uploadde een roze formulier tijdens wagenonboarding. Open de onboarding in admin om op te volgen.',
+    BUTTON_TEXT: 'Open in admin',
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.nl,
+    FOOTER: 'Antwoord op deze e-mail om de eigenaar te contacteren.',
+  },
+  fr: {
+    SUBJECT: '[Notification] Formulaire rose téléversé — {{{OWNER_EMAIL}}}',
+    PREHEADER: "Un propriétaire a téléversé un formulaire rose pendant l'intégration voiture.",
+    HEADER: 'Interne',
+    HEADING: 'Formulaire rose téléversé',
+    BODY: "{{{OWNER_NAME}}} ({{{OWNER_EMAIL}}}) a téléversé un formulaire rose pendant l'intégration voiture. Ouvrez l'intégration dans l'admin pour le suivi.",
+    BUTTON_TEXT: "Ouvrir dans l'admin",
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.fr,
+    FOOTER: 'Répondez à cet e-mail pour contacter le propriétaire.',
+  },
+} as const;
+
+const carOnboardingCarValueCounterNotificationVariables = {
+  en: {
+    SUBJECT: '[Notification] Car value counter — {{{OWNER_EMAIL}}}',
+    PREHEADER: 'An owner submitted a car value counter proposal.',
+    HEADER: 'Internal',
+    HEADING: 'Car value counter proposal',
+    BODY: '{{{OWNER_NAME}}} ({{{OWNER_EMAIL}}}) submitted a counter proposal during car onboarding. Proposed value: {{{PROPOSED_VALUE}}}. Counter value: {{{COUNTER_VALUE}}}. Message: {{{COUNTER_MESSAGE}}}. Open the onboarding in admin to respond.',
+    BUTTON_TEXT: 'Open in admin',
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.en,
+    FOOTER: 'Reply to this email to contact the owner.',
+  },
+  nl: {
+    SUBJECT: '[Notificatie] Tegenvoorstel wagenwaarde — {{{OWNER_EMAIL}}}',
+    PREHEADER: 'Een eigenaar diende een tegenvoorstel voor de wagenwaarde in.',
+    HEADER: 'Intern',
+    HEADING: 'Tegenvoorstel wagenwaarde',
+    BODY: '{{{OWNER_NAME}}} ({{{OWNER_EMAIL}}}) diende een tegenvoorstel in tijdens wagenonboarding. Voorgestelde waarde: {{{PROPOSED_VALUE}}}. Tegenvoorstel: {{{COUNTER_VALUE}}}. Bericht: {{{COUNTER_MESSAGE}}}. Open de onboarding in admin om te antwoorden.',
+    BUTTON_TEXT: 'Open in admin',
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.nl,
+    FOOTER: 'Antwoord op deze e-mail om de eigenaar te contacteren.',
+  },
+  fr: {
+    SUBJECT: '[Notification] Contre-proposition valeur — {{{OWNER_EMAIL}}}',
+    PREHEADER: 'Un propriétaire a soumis une contre-proposition de valeur.',
+    HEADER: 'Interne',
+    HEADING: 'Contre-proposition de valeur',
+    BODY: "{{{OWNER_NAME}}} ({{{OWNER_EMAIL}}}) a soumis une contre-proposition pendant l'intégration voiture. Valeur proposée : {{{PROPOSED_VALUE}}}. Contre-proposition : {{{COUNTER_VALUE}}}. Message : {{{COUNTER_MESSAGE}}}. Ouvrez l'intégration dans l'admin pour répondre.",
+    BUTTON_TEXT: "Ouvrir dans l'admin",
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.fr,
+    FOOTER: 'Répondez à cet e-mail pour contacter le propriétaire.',
+  },
+} as const;
+
+const carOnboardingCreatedVariables = {
+  en: {
+    SUBJECT: 'Your car onboarding has started',
+    PREHEADER: 'Continue your car onboarding at Dégage.',
+    HEADER: 'Car onboarding',
+    HEADING: 'Your car onboarding has started',
+    BODY: 'We have started your car onboarding at Dégage. Continue with the steps so we can get your car ready.',
+    BUTTON_TEXT: 'Continue onboarding',
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.en,
+    FOOTER: 'Questions? Reply to this email.',
+  },
+  nl: {
+    SUBJECT: 'Je wagenonboarding is gestart',
+    PREHEADER: 'Ga verder met je wagenonboarding bij Dégage.',
+    HEADER: 'Wagenonboarding',
+    HEADING: 'Je wagenonboarding is gestart',
+    BODY: 'We hebben je wagenonboarding bij Dégage gestart. Ga verder met de stappen zodat we je wagen klaar kunnen maken.',
+    BUTTON_TEXT: 'Verdergaan met onboarding',
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.nl,
+    FOOTER: 'Vragen? Antwoord op deze e-mail.',
+  },
+  fr: {
+    SUBJECT: "L'intégration de votre voiture a commencé",
+    PREHEADER: "Poursuivez l'intégration de votre voiture chez Dégage.",
+    HEADER: 'Intégration voiture',
+    HEADING: "L'intégration de votre voiture a commencé",
+    BODY: "Nous avons démarré l'intégration de votre voiture chez Dégage. Poursuivez les étapes pour que nous puissions préparer votre voiture.",
+    BUTTON_TEXT: "Continuer l'intégration",
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.fr,
+    FOOTER: 'Des questions ? Répondez à cet e-mail.',
+  },
+} as const;
+
+const carOnboardingCreatedNotificationVariables = {
+  en: {
+    SUBJECT: '[Notification] New car onboarding — {{{OWNER_EMAIL}}}',
+    PREHEADER: 'A car onboarding was created.',
+    HEADER: 'Internal',
+    HEADING: 'New car onboarding',
+    BODY: 'A car onboarding was created for {{{OWNER_NAME}}} ({{{OWNER_EMAIL}}}). Open it in admin to follow up.',
+    BUTTON_TEXT: 'Open in admin',
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.en,
+    FOOTER: 'Reply to this email to contact the owner when an address is available.',
+  },
+  nl: {
+    SUBJECT: '[Notificatie] Nieuwe wagenonboarding — {{{OWNER_EMAIL}}}',
+    PREHEADER: 'Er is een wagenonboarding aangemaakt.',
+    HEADER: 'Intern',
+    HEADING: 'Nieuwe wagenonboarding',
+    BODY: 'Er is een wagenonboarding aangemaakt voor {{{OWNER_NAME}}} ({{{OWNER_EMAIL}}}). Open die in admin om op te volgen.',
+    BUTTON_TEXT: 'Open in admin',
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.nl,
+    FOOTER: 'Antwoord op deze e-mail om de eigenaar te contacteren wanneer er een adres is.',
+  },
+  fr: {
+    SUBJECT: '[Notification] Nouvelle intégration voiture — {{{OWNER_EMAIL}}}',
+    PREHEADER: 'Une intégration voiture a été créée.',
+    HEADER: 'Interne',
+    HEADING: 'Nouvelle intégration voiture',
+    BODY: "Une intégration voiture a été créée pour {{{OWNER_NAME}}} ({{{OWNER_EMAIL}}}). Ouvrez-la dans l'admin pour le suivi.",
+    BUTTON_TEXT: "Ouvrir dans l'admin",
+    BUTTON_URL: '',
+    FALLBACK_HINT: buttonFallback.fr,
+    FOOTER: "Répondez à cet e-mail pour contacter le propriétaire lorsqu'une adresse est disponible.",
+  },
+} as const;
+
 const templates = [
   { code: TemplatesEnum.VerificationEmail, designId: BUTTON_EMAIL_DESIGN_ALIAS, variables: verificationVariables },
   { code: TemplatesEnum.ResetPasswordEmail, designId: BUTTON_EMAIL_DESIGN_ALIAS, variables: resetPasswordVariables },
@@ -308,6 +452,26 @@ const templates = [
     code: TemplatesEnum.CarOnboardingPreparationNudgeEmail,
     designId: BUTTON_EMAIL_DESIGN_ALIAS,
     variables: carOnboardingPreparationNudgeVariables,
+  },
+  {
+    code: TemplatesEnum.CarOnboardingPinkFormUploadedNotificationEmail,
+    designId: BUTTON_EMAIL_DESIGN_ALIAS,
+    variables: carOnboardingPinkFormUploadedNotificationVariables,
+  },
+  {
+    code: TemplatesEnum.CarOnboardingCarValueCounterNotificationEmail,
+    designId: BUTTON_EMAIL_DESIGN_ALIAS,
+    variables: carOnboardingCarValueCounterNotificationVariables,
+  },
+  {
+    code: TemplatesEnum.CarOnboardingCreatedEmail,
+    designId: BUTTON_EMAIL_DESIGN_ALIAS,
+    variables: carOnboardingCreatedVariables,
+  },
+  {
+    code: TemplatesEnum.CarOnboardingCreatedNotificationEmail,
+    designId: BUTTON_EMAIL_DESIGN_ALIAS,
+    variables: carOnboardingCreatedNotificationVariables,
   },
 ] as const;
 

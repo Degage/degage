@@ -13,6 +13,7 @@ import { isAdmin } from '@/domain/role.utils';
 import { readSimulation } from '@/actions/simulation/read';
 import { dbCarOnboardingCreate } from '@/storage/car-onboarding/car-onboarding.create';
 import { CarOnboardingForbiddenError } from '@/actions/car-onboarding/car-onboarding-forbidden.error';
+import { notifyCarOnboardingCreated } from '@/actions/car-onboarding/notify-notification-emails';
 import { readCarOnboarding } from '@/actions/car-onboarding/read';
 
 export const createCarOnboarding = async (input: CarOnboardingCreateInput, caller: UserWithRole): Promise<CarOnboarding> => {
@@ -48,5 +49,7 @@ export const createCarOnboarding = async (input: CarOnboardingCreateInput, calle
   const withInsurer = applyInsurerStatus(toCreate);
   const withRoadAssistancePlan = applyRoadAssistancePlanStatus(withInsurer);
   const created = await dbCarOnboardingCreate(withRoadAssistancePlan);
-  return readCarOnboarding(created.id!);
+  const createdOnboarding = await readCarOnboarding(created.id!);
+  await notifyCarOnboardingCreated(createdOnboarding);
+  return createdOnboarding;
 };
