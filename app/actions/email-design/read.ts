@@ -1,7 +1,7 @@
 import type { EmailDesign } from '@/domain/email-design.model';
 import { NotFoundError } from '@/actions/app.error';
 import { requireResendClient } from './resend-client';
-import { ResendRequestError } from './resend-request.error';
+import { ResendRequestError } from '@/integrations/resend-request.error';
 
 export const readEmailDesign = async (id: string): Promise<EmailDesign> => {
   const resend = requireResendClient();

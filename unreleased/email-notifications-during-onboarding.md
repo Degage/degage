@@ -11,3 +11,4 @@
 
 - Added `button-email` templates `car-onboarding-pink-form-uploaded-notification` and `car-onboarding-car-value-counter-notification` sent to `SUPPORT_REPLY_TO_EMAIL`.
 - Added `button-email` templates `car-onboarding-created-email` (owner) and `car-onboarding-created-notification` (backoffice via `SUPPORT_REPLY_TO_EMAIL`).
+- Resend send failures (`result.error`) are logged via `logger.error`; optional `throwOnError` (default false) rethrows as `ResendRequestError`.

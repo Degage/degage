@@ -1,6 +1,6 @@
 import type { EmailDesign } from '@/domain/email-design.model';
 import { requireResendClient } from './resend-client';
-import { ResendRequestError } from './resend-request.error';
+import { ResendRequestError } from '@/integrations/resend-request.error';
 
 const mapListItem = (item: { id: string; name: string; alias: string | null; status: 'draft' | 'published' }): EmailDesign => ({
   id: item.id,
