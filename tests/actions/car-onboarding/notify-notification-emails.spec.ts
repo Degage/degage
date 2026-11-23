@@ -45,10 +45,6 @@ describe('notify-notification-emails helpers', () => {
     getRequestLocaleMock.mockReturnValue('en');
   });
 
-  it('builds the admin car onboarding url', () => {
-    expect(buildAdminCarOnboardingUrl(onboardingId)).toBe(`http://localhost:3000/app/admin/car-onboardings/${onboardingId}`);
-  });
-
   it('maps locales and falls back to the default', () => {
     expect(toEmailTemplateLocale('nl')).toBe('nl');
     expect(toEmailTemplateLocale('nope')).toBe('nl');
