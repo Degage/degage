@@ -14,7 +14,7 @@ const featureFlags = [
   },
   {
     code: CAR_SHARING_FEATURE_FLAG,
-    description: 'Shows a car-sharing choice on the sign-in dialog.',
+    description: 'Turns on car sharing after sign-in. Stays off until then.',
     enabled: false,
   },
 ] as const;
