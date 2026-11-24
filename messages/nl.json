@@ -2969,6 +2969,11 @@
         "title": "Beheer",
         "description": "Beheer gebruikers en referentiedata voor Dégage medewerkers.",
         "cta": "Naar beheer →"
+      },
+      "carSharing": {
+        "title": "Autodelen",
+        "description": "Dit is de nieuwe plek om een deelwagen te zoeken. Zoeken kan hier nog niet.",
+        "cta": "Autodelen openen →"
       }
     },
     "playConnector": {

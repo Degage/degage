@@ -1,13 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { Car, CircleHelp, Shield } from 'lucide-react';
+import { CalendarDays, Car, CircleHelp, Shield } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+import { CAR_SHARING_PATH } from '@/app/car-sharing/access';
 import { InlineCopy } from '@/app/components/inline-copy';
 import { PublicPage } from '@/app/components/public/public-shell';
 import { Button } from '@/app/components/ui/button';
 import { useIsAdmin } from '@/app/lib/role';
+import { useCarSharingEnabled } from '@/app/lib/use-car-sharing-enabled';
 
 type DashboardPageProps = {
   name: string;
@@ -23,6 +25,7 @@ const iconClassName = 'size-5 shrink-0';
 export function DashboardPage({ name }: DashboardPageProps) {
   const t = useTranslations('dashboard');
   const { isAdmin } = useIsAdmin();
+  const carSharing = useCarSharingEnabled();
 
   return (
     <PublicPage>
@@ -57,6 +60,21 @@ export function DashboardPage({ name }: DashboardPageProps) {
             <Link href="/app/faq">{t('cards.faq.cta')}</Link>
           </Button>
         </article>
+
+        {carSharing === 'enabled' ? (
+          <article className={cardClassName}>
+            <span className={iconWellClassName} aria-hidden>
+              <CalendarDays className={iconClassName} />
+            </span>
+            <h2 className="mt-4 text-lg font-bold text-stone-900">{t('cards.carSharing.title')}</h2>
+            <p className="mt-2 flex-1 text-[15px] leading-relaxed text-stone-600">
+              <InlineCopy>{t('cards.carSharing.description')}</InlineCopy>
+            </p>
+            <Button className="mt-6 h-11 rounded-lg bg-[var(--public-brand)] px-6 text-white hover:bg-[var(--public-brand-hover)]" asChild>
+              <Link href={CAR_SHARING_PATH}>{t('cards.carSharing.cta')}</Link>
+            </Button>
+          </article>
+        ) : null}
 
         {isAdmin ? (
           <article className={cardClassName}>
