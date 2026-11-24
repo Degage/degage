@@ -2833,9 +2833,7 @@
   },
   "carSharingPage": {
     "title": "Autopartage",
-    "intro": "C'est ici que vous chercherez une voiture partagée. La recherche n'est pas encore disponible.",
-    "connect": "Connecter Degapp",
-    "loadError": "La connexion Degapp n'a pas pu être chargée."
+    "intro": "C'est ici que vous chercherez une voiture partagée. La recherche n'est pas encore disponible."
   },
   "landing": {
     "brand": "Dégage!",
@@ -2975,7 +2973,9 @@
       "carSharing": {
         "title": "Autopartage",
         "description": "C'est ici que vous chercherez une voiture partagée. La recherche n'est pas encore disponible.",
-        "cta": "Ouvrir l'autopartage →"
+        "cta": "Ouvrir l'autopartage →",
+        "connect": "Connecter Degapp →",
+        "loadError": "La connexion Degapp n'a pas pu être chargée."
       }
     },
     "playConnector": {

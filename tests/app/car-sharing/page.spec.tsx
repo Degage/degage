@@ -1,40 +1,65 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
+const replace = vi.hoisted(() => vi.fn());
 
 vi.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
 }));
 
-import { CarSharingContent } from '@/app/car-sharing/page';
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ replace }),
+}));
+
+vi.mock('@/app/lib/auth', () => ({
+  authClient: {
+    useSession: () => ({ data: { user: { id: 'user-1' } }, isPending: false }),
+  },
+}));
+
+vi.mock('@/app/lib/use-car-sharing-enabled', () => ({
+  useCarSharingEnabled: () => 'enabled',
+}));
+
+import CarSharingPage, { CarSharingContent } from '@/app/car-sharing/page';
+
+const jsonResponse = (status: string) => ({
+  ok: true,
+  json: async () => ({ status }),
+});
 
 describe('CarSharingContent', () => {
   afterEach(() => {
     cleanup();
+    replace.mockClear();
+    vi.unstubAllGlobals();
   });
 
-  it('shows the connect button when the connection is missing', () => {
-    render(<CarSharingContent status="missing" />);
+  it('shows the empty page without a connect link', () => {
+    render(<CarSharingContent />);
 
-    const link = screen.getByRole('link', { name: 'connect' });
-    expect(link.getAttribute('href')).toBe('/app/account/settings?tab=play-connector&redirectTo=%2Fapp%2Fcar-sharing');
+    expect(screen.getByRole('heading', { name: 'title' })).toBeTruthy();
+    expect(screen.getByText('intro')).toBeTruthy();
+    expect(screen.queryByRole('link')).toBeNull();
   });
 
-  it('shows the connect button when the connection is failing', () => {
-    render(<CarSharingContent status="failing" />);
+  it('sends a visitor without a working Degapp connection back to the dashboard', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse('missing')));
 
-    expect(screen.getByRole('link', { name: 'connect' })).toBeTruthy();
+    render(<CarSharingPage />);
+
+    await waitFor(() => {
+      expect(replace).toHaveBeenCalledWith('/app/dashboard');
+    });
+    expect(screen.queryByRole('heading', { name: 'title' })).toBeNull();
   });
 
-  it('hides the connect button when the connection succeeded', () => {
-    render(<CarSharingContent status="success" />);
+  it('shows the page when Degapp is connected', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse('success')));
 
-    expect(screen.queryByRole('link', { name: 'connect' })).toBeNull();
-  });
+    render(<CarSharingPage />);
 
-  it('shows a load error and hides the connect button when the connection could not be read', () => {
-    render(<CarSharingContent status="load-error" />);
-
-    expect(screen.getByText('loadError')).toBeTruthy();
-    expect(screen.queryByRole('link', { name: 'connect' })).toBeNull();
+    expect(await screen.findByRole('heading', { name: 'title' })).toBeTruthy();
+    expect(replace).not.toHaveBeenCalled();
   });
 });

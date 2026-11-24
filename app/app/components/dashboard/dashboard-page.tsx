@@ -1,10 +1,11 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { CalendarDays, Car, CircleHelp, Shield } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { CAR_SHARING_PATH } from '@/app/car-sharing/access';
+import { CAR_SHARING_PATH, type CarSharingConnection, carSharingConnectHref, carSharingConnectionFromStatus } from '@/app/car-sharing/access';
 import { InlineCopy } from '@/app/components/inline-copy';
 import { PublicPage } from '@/app/components/public/public-shell';
 import { Button } from '@/app/components/ui/button';
@@ -21,6 +22,54 @@ const iconWellClassName =
   'flex size-10 shrink-0 items-center justify-center self-start rounded-lg bg-[var(--public-icon-bg)] text-[var(--public-accent-strong)]';
 
 const iconClassName = 'size-5 shrink-0';
+
+function CarSharingDashboardCard() {
+  const t = useTranslations('dashboard');
+  const [connection, setConnection] = useState<CarSharingConnection | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      try {
+        const response = await fetch('/api/play-connector');
+        if (!response.ok) throw new Error('load failed');
+        const data = (await response.json()) as { status?: string };
+        if (!cancelled) setConnection(carSharingConnectionFromStatus(data.status));
+      } catch {
+        if (!cancelled) setConnection('load-error');
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const href = (() => {
+    if (connection === 'success') return CAR_SHARING_PATH;
+    if (connection === 'missing' || connection === 'failing') return carSharingConnectHref;
+    return null;
+  })();
+
+  return (
+    <article className={cardClassName}>
+      <span className={iconWellClassName} aria-hidden>
+        <CalendarDays className={iconClassName} />
+      </span>
+      <h2 className="mt-4 text-lg font-bold text-stone-900">{t('cards.carSharing.title')}</h2>
+      <p className="mt-2 flex-1 text-[15px] leading-relaxed text-stone-600">
+        <InlineCopy>{t('cards.carSharing.description')}</InlineCopy>
+      </p>
+      {connection === 'load-error' ? (
+        <p className="mt-4 text-[15px] leading-relaxed text-stone-600">{t('cards.carSharing.loadError')}</p>
+      ) : null}
+      {href ? (
+        <Button className="mt-6 h-11 rounded-lg bg-[var(--public-brand)] px-6 text-white hover:bg-[var(--public-brand-hover)]" asChild>
+          <Link href={href}>{connection === 'success' ? t('cards.carSharing.cta') : t('cards.carSharing.connect')}</Link>
+        </Button>
+      ) : null}
+    </article>
+  );
+}
 
 export function DashboardPage({ name }: DashboardPageProps) {
   const t = useTranslations('dashboard');
@@ -61,20 +110,7 @@ export function DashboardPage({ name }: DashboardPageProps) {
           </Button>
         </article>
 
-        {carSharing === 'enabled' ? (
-          <article className={cardClassName}>
-            <span className={iconWellClassName} aria-hidden>
-              <CalendarDays className={iconClassName} />
-            </span>
-            <h2 className="mt-4 text-lg font-bold text-stone-900">{t('cards.carSharing.title')}</h2>
-            <p className="mt-2 flex-1 text-[15px] leading-relaxed text-stone-600">
-              <InlineCopy>{t('cards.carSharing.description')}</InlineCopy>
-            </p>
-            <Button className="mt-6 h-11 rounded-lg bg-[var(--public-brand)] px-6 text-white hover:bg-[var(--public-brand-hover)]" asChild>
-              <Link href={CAR_SHARING_PATH}>{t('cards.carSharing.cta')}</Link>
-            </Button>
-          </article>
-        ) : null}
+        {carSharing === 'enabled' ? <CarSharingDashboardCard /> : null}
 
         {isAdmin ? (
           <article className={cardClassName}>

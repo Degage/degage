@@ -6,7 +6,6 @@ import { Loader2, TriangleAlertIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
-import { carSharingConnectReturnPath } from '@/app/car-sharing/access';
 import { InlineCopy } from '@/app/components/inline-copy';
 import { Button } from '@/app/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card';
@@ -14,6 +13,7 @@ import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { apiDelete, apiPut } from '@/app/lib/api-client';
 import { authClient } from '@/app/lib/auth';
+import { playConnectorReturnPath } from '@/app/lib/play-connector-return-path';
 import type { PlayConnectorStatus } from '@/domain/play-connector.model';
 
 export function PlayConnectorCard({
@@ -77,7 +77,7 @@ export function PlayConnectorCard({
       setPassword('');
       onStatusChange?.(data);
       toast.success(t('connectSuccess'));
-      const safeReturn = carSharingConnectReturnPath(returnPath);
+      const safeReturn = playConnectorReturnPath(returnPath);
       if (safeReturn) {
         router.push(safeReturn);
       }
