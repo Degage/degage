@@ -2831,6 +2831,10 @@
       "startNewCta": "Démarrer une nouvelle simulation →"
     }
   },
+  "carSharingPage": {
+    "title": "Autopartage",
+    "intro": "C'est ici que vous chercherez une voiture partagée. La recherche n'est pas encore disponible."
+  },
   "landing": {
     "brand": "Dégage!",
     "header": {
@@ -2965,6 +2969,11 @@
         "title": "Administration",
         "description": "Gérez les utilisateurs et les données de référence.",
         "cta": "Vers l’administration →"
+      },
+      "carSharing": {
+        "title": "Autopartage",
+        "description": "C'est ici que vous chercherez une voiture partagée. La recherche n'est pas encore disponible.",
+        "cta": "Ouvrir l'autopartage →"
       }
     },
     "playConnector": {
