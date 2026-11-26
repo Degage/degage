@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Loader2, TriangleAlertIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
@@ -12,18 +13,22 @@ import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { apiDelete, apiPut } from '@/app/lib/api-client';
 import { authClient } from '@/app/lib/auth';
+import { playConnectorReturnPath } from '@/app/lib/play-connector-return-path';
 import type { PlayConnectorStatus } from '@/domain/play-connector.model';
 
 export function PlayConnectorCard({
   connectPath = '/api/play-connector',
   onStatusChange,
   allowDisconnect = true,
+  returnPath = null,
 }: {
   connectPath?: string;
   onStatusChange?: (status: PlayConnectorStatus) => void;
   allowDisconnect?: boolean;
+  returnPath?: string | null;
 }) {
   const t = useTranslations('playConnector');
+  const router = useRouter();
   const { data: session } = authClient.useSession();
   const [status, setStatus] = useState<PlayConnectorStatus | null>(null);
   const [email, setEmail] = useState('');
@@ -72,6 +77,10 @@ export function PlayConnectorCard({
       setPassword('');
       onStatusChange?.(data);
       toast.success(t('connectSuccess'));
+      const safeReturn = playConnectorReturnPath(returnPath);
+      if (safeReturn) {
+        router.push(safeReturn);
+      }
     } catch {
       toast.error(t('connectFailed'));
     } finally {

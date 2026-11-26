@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { carSharingAccess } from '@/app/car-sharing/access';
+import { carSharingAccess, carSharingConnectionFromStatus } from '@/app/car-sharing/access';
 
 describe('carSharingAccess', () => {
   it('sends a signed-out visitor to sign in', () => {
@@ -19,5 +19,19 @@ describe('carSharingAccess', () => {
 
   it('shows the page when the visitor is signed in and the flag is on', () => {
     expect(carSharingAccess(true, 'enabled')).toBe('page');
+  });
+});
+
+describe('carSharingConnectionFromStatus', () => {
+  it('keeps a known connection status', () => {
+    expect(carSharingConnectionFromStatus('missing')).toBe('missing');
+    expect(carSharingConnectionFromStatus('failing')).toBe('failing');
+    expect(carSharingConnectionFromStatus('success')).toBe('success');
+  });
+
+  it('treats an unexpected status as a load error', () => {
+    expect(carSharingConnectionFromStatus(undefined)).toBe('load-error');
+    expect(carSharingConnectionFromStatus('')).toBe('load-error');
+    expect(carSharingConnectionFromStatus('unknown')).toBe('load-error');
   });
 });

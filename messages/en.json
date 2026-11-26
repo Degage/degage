@@ -2973,7 +2973,9 @@
       "carSharing": {
         "title": "Car sharing",
         "description": "This is the new place to find a shared car. Search is not here yet.",
-        "cta": "Open car sharing →"
+        "cta": "Open car sharing →",
+        "connect": "Connect Degapp →",
+        "loadError": "The Degapp connection could not be loaded."
       }
     },
     "playConnector": {
