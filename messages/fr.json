@@ -2833,7 +2833,14 @@
   },
   "carSharingPage": {
     "title": "Autopartage",
-    "intro": "C'est ici que vous chercherez une voiture partagée. La recherche n'est pas encore disponible."
+    "intro": "Choisissez une période. Les dix voitures les plus proches, libres pendant toute cette période, apparaissent ici.",
+    "from": "Du",
+    "until": "Au",
+    "search": "Afficher les voitures",
+    "searching": "Recherche en cours…",
+    "empty": "Aucune voiture n'est libre pendant toute cette période.",
+    "error": "La recherche n'a pas abouti. Réessayez.",
+    "distance": "{distance} km"
   },
   "landing": {
     "brand": "Dégage!",

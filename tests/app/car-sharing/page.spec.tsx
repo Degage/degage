@@ -1,10 +1,10 @@
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 const replace = vi.hoisted(() => vi.fn());
 
 vi.mock('next-intl', () => ({
-  useTranslations: () => (key: string) => key,
+  useTranslations: () => (key: string, values?: { distance?: number }) => (values?.distance == null ? key : `${values.distance} km`),
 }));
 
 vi.mock('next/navigation', () => ({
@@ -35,11 +35,12 @@ describe('CarSharingContent', () => {
     vi.unstubAllGlobals();
   });
 
-  it('shows the empty page without a connect link', () => {
+  it('shows the period form without a connect link', () => {
     render(<CarSharingContent />);
 
     expect(screen.getByRole('heading', { name: 'title' })).toBeTruthy();
     expect(screen.getByText('intro')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'search' })).toBeTruthy();
     expect(screen.queryByRole('link')).toBeNull();
   });
 
@@ -61,5 +62,27 @@ describe('CarSharingContent', () => {
 
     expect(await screen.findByRole('heading', { name: 'title' })).toBeTruthy();
     expect(replace).not.toHaveBeenCalled();
+  });
+
+  it('lists the cars that are free for the chosen period', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi
+        .fn()
+        .mockResolvedValueOnce(jsonResponse('success'))
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => ({
+            cars: [{ id: '550e8400-e29b-41d4-a716-446655440010', playCarId: 1793, name: 'Near car', distanceKm: 1.7 }],
+          }),
+        }),
+    );
+
+    render(<CarSharingPage />);
+
+    fireEvent.click(await screen.findByRole('button', { name: 'search' }));
+
+    expect(await screen.findByText('Near car')).toBeTruthy();
+    expect(screen.getByText('1.7 km')).toBeTruthy();
   });
 });

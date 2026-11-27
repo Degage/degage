@@ -2833,7 +2833,14 @@
   },
   "carSharingPage": {
     "title": "Autodelen",
-    "intro": "Dit is de nieuwe plek om een deelwagen te zoeken. Zoeken kan hier nog niet."
+    "intro": "Kies een periode. De tien dichtstbijzijnde wagens die de hele tijd vrij zijn, staan hier.",
+    "from": "Van",
+    "until": "Tot",
+    "search": "Toon wagens",
+    "searching": "Wagens zoeken…",
+    "empty": "Geen wagen is die hele periode vrij.",
+    "error": "De zoekopdracht is niet gelukt. Probeer opnieuw.",
+    "distance": "{distance} km"
   },
   "landing": {
     "brand": "Dégage!",

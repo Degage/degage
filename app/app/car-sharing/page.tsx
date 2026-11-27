@@ -14,6 +14,7 @@ import {
 import { PublicPage } from '@/app/components/public/public-shell';
 import { authClient } from '@/app/lib/auth';
 import { useCarSharingEnabled } from '@/app/lib/use-car-sharing-enabled';
+import { CarSharingSearchForm } from '@/app/car-sharing/search-form';
 
 export function CarSharingContent() {
   const t = useTranslations('carSharingPage');
@@ -22,6 +23,7 @@ export function CarSharingContent() {
     <PublicPage narrow>
       <h1 className="text-[28px] leading-tight font-extrabold tracking-tight text-stone-900">{t('title')}</h1>
       <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-stone-600">{t('intro')}</p>
+      <CarSharingSearchForm />
     </PublicPage>
   );
 }
