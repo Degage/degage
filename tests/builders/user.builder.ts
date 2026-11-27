@@ -10,6 +10,7 @@ export const user = (data: Partial<User> = {}): User => {
     image: data.image ?? null,
     locale: data.locale ?? DEFAULT_LOCALE,
     role: data.role ?? null,
+    degappUserId: data.degappUserId ?? null,
     banned: data.banned ?? false,
     banReason: data.banReason ?? null,
     banExpires: data.banExpires ?? null,

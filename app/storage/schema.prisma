@@ -203,6 +203,7 @@ model CarOnboarding {
   shareStartDate      DateTime?
   carName             String?
   carPcId             Int?
+  sharedCar           SharedCar?
   gsheetRowNumber     Int?
   preparationConfirmedAt DateTime?
   lastPreparationNudgeEmail DateTime?
@@ -515,6 +516,7 @@ model User {
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @default(now()) @updatedAt
   role          String?
+  degappUserId  String?            @unique
   banned        Boolean?           @default(false)
   banReason     String?
   banExpires    DateTime?
@@ -528,12 +530,27 @@ model User {
   oauthconsents      OauthConsent[]
   playConnector      PlayConnector?
   carOnboardings     CarOnboarding[]
+  sharedCars         SharedCar[]
   contracts          Contract[]
   contractTypesAsDefaultSignee ContractType[] @relation("ContractTypeDefaultSignee")
   contractTypeViewers ContractTypeViewer[]
 
   @@unique([email])
   @@map("user")
+}
+
+model SharedCar {
+  id           String         @id @default(uuid())
+  playCarId    Int            @unique
+  name         String
+  ownerUserId  String?
+  owner        User?          @relation(fields: [ownerUserId], references: [id], onDelete: Restrict)
+  onboardingId String?        @unique
+  onboarding   CarOnboarding? @relation(fields: [onboardingId], references: [id], onDelete: Restrict)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@map("shared_car")
 }
 
 model PlayConnector {
