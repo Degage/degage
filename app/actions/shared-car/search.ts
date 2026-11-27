@@ -1,9 +1,9 @@
 import {
+  type SharedCarSearchPeriod,
+  type SharedCarSearchResult,
   sharedCarSearchPeriodSchema,
   sharedCarSearchResultSchema,
   toDegappPeriod,
-  type SharedCarSearchPeriod,
-  type SharedCarSearchResult,
 } from '@/domain/shared-car-search.model';
 import { getPlaySessionCookie } from '@/actions/play-connector/get-session-cookie';
 import { fetchPlay } from '@/play-connector/client';

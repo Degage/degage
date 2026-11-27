@@ -60,6 +60,7 @@ Mock endpoints:
   - `parsers/cars-page.parser.ts` — car names from `/cars/page` `/cars/view` links (exact match for availability)
   - `parsers/reserve-fleet.parser.ts` — car id, name, brand-and-model text, and fuel from a saved `/calendar/cars` page
   - `parsers/calendar-list.parser.ts` — car id, name, and distance from one `GET /calendar/list` for a chosen period (`pageSize=10`)
+  - `parsers/calendar-events.parser.ts` — reservation intervals from one `GET /calendarevents/car?id=` per listed car. An unrecognized body leaves the week grid out.
   - `match-car-brand.ts` — longest brand prefix, then explicit fleet spellings, then the model prefix (`mercedes` maps to `mercedes-benz`)
 - `app/storage/play-connector/` — `PlayConnector` table (encrypted secrets at rest)
 - `app/actions/play-connector/` — link, disconnect, status, session cookie orchestration (including admin mode), create car

@@ -2840,7 +2840,10 @@
     "searching": "Recherche en cours…",
     "empty": "Aucune voiture n'est libre pendant toute cette période.",
     "error": "La recherche n'a pas abouti. Réessayez.",
-    "distance": "{distance} km"
+    "distance": "{distance} km",
+    "week": "Afficher la semaine",
+    "weekLoading": "Chargement de la semaine…",
+    "weekUnavailable": "La vue semaine n'est pas encore disponible."
   },
   "landing": {
     "brand": "Dégage!",

@@ -85,4 +85,30 @@ describe('CarSharingContent', () => {
     expect(await screen.findByText('Near car')).toBeTruthy();
     expect(screen.getByText('1.7 km')).toBeTruthy();
   });
+
+  it('keeps the list and skips the grid when the car calendar is not intervals', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi
+        .fn()
+        .mockResolvedValueOnce(jsonResponse('success'))
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => ({
+            cars: [{ id: '550e8400-e29b-41d4-a716-446655440010', playCarId: 1793, name: 'Near car', distanceKm: 1.7 }],
+          }),
+        })
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => ({ available: false, cars: [], rides: [] }),
+        }),
+    );
+
+    render(<CarSharingPage />);
+    fireEvent.click(await screen.findByRole('button', { name: 'search' }));
+    fireEvent.click(await screen.findByRole('button', { name: 'week' }));
+
+    expect(await screen.findByText('weekUnavailable')).toBeTruthy();
+    expect(screen.queryByRole('table')).toBeNull();
+  });
 });

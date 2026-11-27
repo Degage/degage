@@ -2840,7 +2840,10 @@
     "searching": "Looking for cars…",
     "empty": "No cars are free for that whole period.",
     "error": "The search did not go through. Try again.",
-    "distance": "{distance} km"
+    "distance": "{distance} km",
+    "week": "Show the week",
+    "weekLoading": "Loading the week…",
+    "weekUnavailable": "The week view is not available yet."
   },
   "landing": {
     "brand": "Dégage!",
