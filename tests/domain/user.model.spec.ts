@@ -47,6 +47,15 @@ describe('userSchema', () => {
     expect(result.success).toBe(false);
   });
 
+  it('defaults a missing Degapp user id to null', () => {
+    const { degappUserId: _ignored, ...withoutDegappUserId } = user();
+    const result = userSchema.safeParse(withoutDegappUserId);
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.degappUserId).toBeNull();
+    }
+  });
+
   it('fails when unexpected fields are provided', () => {
     const result = userSchema.safeParse({ ...user(), extra: true });
     expect(result.success).toBe(false);

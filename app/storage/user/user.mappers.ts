@@ -11,6 +11,7 @@ export const dbUserToDomain = (user: Prisma.UserGetPayload<Prisma.UserDefaultArg
     image: user.image,
     locale: user.locale,
     role: user.role as Role | null,
+    degappUserId: user.degappUserId,
     banned: user.banned,
     banReason: user.banReason,
     banExpires: user.banExpires,

@@ -12,6 +12,7 @@ export const userSchema = z
     image: z.string().nullable().default(null),
     locale: z.string().nullable().default(DEFAULT_LOCALE),
     role: roleSchema.nullable().default(null),
+    degappUserId: z.string().min(1).nullable().default(null),
     banned: z.boolean().nullable().default(false),
     banReason: z.string().nullable().default(null),
     banExpires: z.coerce.date().nullable().default(null),
