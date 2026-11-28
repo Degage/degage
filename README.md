@@ -341,6 +341,7 @@ This log explains why packages were installed.
 | Faceted Filter                                  | cmdk (shadcn command component)                                                                        |
 | Internationalization                            | next-intl                                                                                              |
 | ShadCN Calendar / Date picker                   | react-day-picker, date-fns                                                                             |
+| Time zones for date-fns                         | @date-fns/tz                                                                                           |
 | GCS object storage for documents                | @google-cloud/storage                                                                                  |
 | Google Sheets API (service account)             | @googleapis/sheets, google-auth-library                                                                |
 | AI SDK (chat, documents, estimates, embeddings) | ai, @ai-sdk/google, @ai-sdk/react                                                                      |

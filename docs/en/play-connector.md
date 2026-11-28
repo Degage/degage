@@ -59,13 +59,18 @@ Mock endpoints:
   - `parsers/profile-page.parser.ts` — name (first/last), Dégage ID, Verblijfsadres (street/house number/zip/city), GSM from `/profile` HTML
   - `parsers/cars-page.parser.ts` — car names from `/cars/page` `/cars/view` links (exact match for availability)
   - `parsers/reserve-fleet.parser.ts` — car id, name, brand-and-model text, and fuel from a saved `/calendar/cars` page
+  - `parsers/calendar-list.parser.ts` — one `GET /calendar/list` for a chosen period. `pageSize` defaults to 10. The tiles use car id, name,
+    distance, brand and model, year, fuel, seats, doors, and feature labels. Street addresses and thumbnails stay unused.
+  - `parsers/calendar-events.parser.ts` — reservation intervals from one `GET /calendarevents/car?id=&separator=` for each of the ten nearest
+    listed cars. Degapp answers 400 when `separator` is missing. An unrecognized body leaves the week grid out.
   - `match-car-brand.ts` — longest brand prefix, then explicit fleet spellings, then the model prefix (`mercedes` maps to `mercedes-benz`)
 - `app/storage/play-connector/` — `PlayConnector` table (encrypted secrets at rest)
 - `app/actions/play-connector/` — link, disconnect, status, session cookie orchestration (including admin mode), create car
 - `app/actions/play-infosession/` — list owner infosessions (type contains `eigenaar`) and unenroll
 
 Play backend datetimes have no timezone. They are Belgium local time (`Europe/Brussels`, CET UTC+1 / CEST UTC+2) and are converted to UTC
-instants when parsed.
+instants when parsed. Calendar event strings are converted with `@date-fns/tz` in `app/play-connector/play-local-time.ts`. Info-session strings
+are converted in `app/domain/play-infosession.parse.ts`.
 
 ### Create car
 

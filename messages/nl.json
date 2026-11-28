@@ -2833,7 +2833,20 @@
   },
   "carSharingPage": {
     "title": "Autodelen",
-    "intro": "Dit is de nieuwe plek om een deelwagen te zoeken. Zoeken kan hier nog niet."
+    "intro": "Kies een periode. De dichtstbijzijnde wagens die de hele tijd vrij zijn, staan hier.",
+    "seats": "{count} zitplaatsen",
+    "doors": "{count} deuren",
+    "from": "Van",
+    "until": "Tot",
+    "search": "Toon wagens",
+    "searching": "Wagens zoeken…",
+    "empty": "Geen wagen is die hele periode vrij.",
+    "error": "De zoekopdracht is niet gelukt. Probeer opnieuw.",
+    "distance": "{distance} km",
+    "weekLoading": "Week laden…",
+    "weekUnavailable": "De weekweergave is nog niet beschikbaar.",
+    "reserved": "Gereserveerd",
+    "searched": "Gezochte periode"
   },
   "landing": {
     "brand": "Dégage!",
