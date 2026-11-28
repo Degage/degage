@@ -6,5 +6,5 @@
 ### Technical
 
 - The search is one `GET /calendar/list` with Degapp’s default feature flags. Distance and the tile details stay on the response and are not stored.
-- The week view is one `GET /calendarevents/car` per listed car. If that body is not reservation intervals, the grid stays out.
+- The week view is one `GET /calendarevents/car` for each of the ten nearest cars from that list. If that body is not reservation intervals, the grid stays out.
 - Degapp datetime strings are parsed in the play connector. The week grid converts Brussels civil time with `@date-fns/tz`.

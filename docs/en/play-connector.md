@@ -61,8 +61,8 @@ Mock endpoints:
   - `parsers/reserve-fleet.parser.ts` — car id, name, brand-and-model text, and fuel from a saved `/calendar/cars` page
   - `parsers/calendar-list.parser.ts` — one `GET /calendar/list` for a chosen period. `pageSize` defaults to 10. The tiles use car id, name,
     distance, brand and model, year, fuel, seats, doors, and feature labels. Street addresses and thumbnails stay unused.
-  - `parsers/calendar-events.parser.ts` — reservation intervals from one `GET /calendarevents/car?id=` per listed car. An unrecognized body
-    leaves the week grid out.
+  - `parsers/calendar-events.parser.ts` — reservation intervals from one `GET /calendarevents/car?id=` for each of the ten nearest listed cars.
+    An unrecognized body leaves the week grid out.
   - `match-car-brand.ts` — longest brand prefix, then explicit fleet spellings, then the model prefix (`mercedes` maps to `mercedes-benz`)
 - `app/storage/play-connector/` — `PlayConnector` table (encrypted secrets at rest)
 - `app/actions/play-connector/` — link, disconnect, status, session cookie orchestration (including admin mode), create car

@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 
 import { CarSharingWeekGrid } from '@/app/car-sharing/week-grid';
 import type { WeekRide } from '@/app/car-sharing/week';
+import { SHARED_CAR_WEEK_LIMIT } from '@/domain/shared-car-calendar.model';
 import type { SharedCarSearchResult } from '@/domain/shared-car-search.model';
 import type { RideStatus } from '@/domain/ride.model';
 
@@ -68,14 +69,16 @@ export function CarSharingSearchForm() {
     }
   };
 
+  const weekCars = (cars ?? []).slice(0, SHARED_CAR_WEEK_LIMIT);
+
   const onShowWeek = async () => {
-    if (!cars?.length) return;
+    if (weekCars.length === 0) return;
     setWeek('loading');
     try {
       const response = await fetch('/api/car-sharing/calendar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ playCarIds: cars.map((car) => car.playCarId) }),
+        body: JSON.stringify({ playCarIds: weekCars.map((car) => car.playCarId) }),
       });
       if (!response.ok) throw new Error('calendar failed');
       const data = (await response.json()) as CalendarResponse;
@@ -178,7 +181,7 @@ export function CarSharingSearchForm() {
       ) : null}
       {week === 'loading' ? <p className="mt-4 text-sm text-stone-500">{t('weekLoading')}</p> : null}
       {week === 'unavailable' ? <p className="mt-4 text-sm text-stone-600">{t('weekUnavailable')}</p> : null}
-      {week === 'ready' && cars ? <CarSharingWeekGrid cars={cars} rides={weekRides} period={period} /> : null}
+      {week === 'ready' && weekCars.length > 0 ? <CarSharingWeekGrid cars={weekCars} rides={weekRides} period={period} /> : null}
     </div>
   );
 }

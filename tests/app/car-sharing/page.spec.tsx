@@ -124,4 +124,30 @@ describe('CarSharingContent', () => {
     expect(await screen.findByText('weekUnavailable')).toBeTruthy();
     expect(screen.queryByRole('table')).toBeNull();
   });
+
+  it('asks for a week of the ten nearest cars', async () => {
+    const cars = Array.from({ length: 11 }, (_, index) => ({
+      id: `550e8400-e29b-41d4-a716-4466554400${index.toString(16).padStart(2, '0')}`,
+      playCarId: index + 1,
+      name: `Car ${index + 1}`,
+      distanceKm: index + 1,
+    }));
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(jsonResponse('success'))
+      .mockResolvedValueOnce({ ok: true, json: async () => ({ cars }) })
+      .mockResolvedValueOnce({ ok: true, json: async () => ({ available: true, cars: [], rides: [] }) });
+    vi.stubGlobal('fetch', fetchMock);
+
+    render(<CarSharingPage />);
+    fireEvent.click(await screen.findByRole('button', { name: 'search' }));
+    fireEvent.click(await screen.findByRole('button', { name: 'week' }));
+
+    const table = await screen.findByRole('table');
+    const calendarBody = JSON.parse(String(fetchMock.mock.calls[2]?.[1]?.body)) as { playCarIds: number[] };
+    expect(calendarBody.playCarIds).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    expect(screen.getAllByRole('row')).toHaveLength(11);
+    expect(table.textContent).not.toContain('Car 11');
+    expect(screen.getByText('Car 11')).toBeTruthy();
+  });
 });
