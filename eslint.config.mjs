@@ -16,6 +16,7 @@ const eslintConfig = [
       'playwright-report/**',
       'blob-report/**',
       'playwright/.cache/**',
+      '_work/**',
     ],
   },
   {

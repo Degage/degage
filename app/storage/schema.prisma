@@ -531,6 +531,7 @@ model User {
   playConnector      PlayConnector?
   carOnboardings     CarOnboarding[]
   sharedCars         SharedCar[]
+  ridesAsBorrower    Ride[]             @relation("RideBorrower")
   contracts          Contract[]
   contractTypesAsDefaultSignee ContractType[] @relation("ContractTypeDefaultSignee")
   contractTypeViewers ContractTypeViewer[]
@@ -547,10 +548,34 @@ model SharedCar {
   owner        User?          @relation(fields: [ownerUserId], references: [id], onDelete: Restrict)
   onboardingId String?        @unique
   onboarding   CarOnboarding? @relation(fields: [onboardingId], references: [id], onDelete: Restrict)
+  rides        Ride[]
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
 
   @@map("shared_car")
+}
+
+enum RideStatus {
+  requested
+  confirmed
+  declined
+}
+
+model Ride {
+  id                String     @id @default(uuid())
+  sharedCarId       String
+  sharedCar         SharedCar  @relation(fields: [sharedCarId], references: [id], onDelete: Restrict)
+  borrowerId        String?
+  borrower          User?      @relation("RideBorrower", fields: [borrowerId], references: [id], onDelete: Restrict)
+  status            RideStatus
+  startsAt          DateTime
+  endsAt            DateTime
+  playReservationId Int?       @unique
+  lastSyncedAt      DateTime
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  @@map("ride")
 }
 
 model PlayConnector {

@@ -31,7 +31,9 @@ describe('searchAvailableSharedCars', () => {
     vi.clearAllMocks();
     vi.mocked(getPlaySessionCookie).mockResolvedValue({ cookieHeader: 'PLAY_SESSION=1' });
     vi.mocked(fetchPlay).mockResolvedValue({ html, status: 200 });
-    vi.mocked(dbCarOnboardingFindByCarPcIds).mockResolvedValue([{ id: '550e8400-e29b-41d4-a716-446655440099', carPcId: 1793, ownerId: 'owner-1' }]);
+    vi.mocked(dbCarOnboardingFindByCarPcIds).mockResolvedValue([
+      { id: '550e8400-e29b-41d4-a716-446655440099', carPcId: 1793, ownerId: 'owner-1' },
+    ]);
     vi.mocked(dbSharedCarUpsertByPlayCarId).mockResolvedValue({
       id: '550e8400-e29b-41d4-a716-446655440010',
       playCarId: 1793,
@@ -62,7 +64,22 @@ describe('searchAvailableSharedCars', () => {
         playCarId: 1793,
         name: 'Near car',
         distanceKm: 1.7,
+        brandModel: null,
+        category: null,
+        vehicleKind: null,
+        seats: null,
+        doors: null,
+        year: null,
+        fuel: null,
+        features: [],
       },
     ]);
+  });
+
+  it('passes the requested limit through as the Degapp page size', async () => {
+    await searchAvailableSharedCars('user-1', { from: '2026-12-02T10:00', until: '2026-12-03T18:00', limit: 4 });
+
+    const path = vi.mocked(fetchPlay).mock.calls[0]?.[0] ?? '';
+    expect(path).toContain('pageSize=4');
   });
 });
