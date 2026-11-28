@@ -2,7 +2,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 
 import { CarSharingWeekGrid } from '@/app/car-sharing/week-grid';
-import { parsePlayLocalDateTime } from '@/domain/play-local-time';
+import { brusselsDateTime } from '@/app/car-sharing/brussels-time';
 
 const car = {
   id: '550e8400-e29b-41d4-a716-446655440010',
@@ -27,14 +27,14 @@ describe('CarSharingWeekGrid', () => {
           {
             sharedCarId: car.id,
             status: 'confirmed',
-            startsAt: parsePlayLocalDateTime('2026-12-02 10:00')!,
-            endsAt: parsePlayLocalDateTime('2026-12-02 12:00')!,
+            startsAt: brusselsDateTime('2026-12-02 10:00')!,
+            endsAt: brusselsDateTime('2026-12-02 12:00')!,
           },
           {
             sharedCarId: car.id,
             status: 'declined',
-            startsAt: parsePlayLocalDateTime('2026-12-02 13:00')!,
-            endsAt: parsePlayLocalDateTime('2026-12-02 14:00')!,
+            startsAt: brusselsDateTime('2026-12-02 13:00')!,
+            endsAt: brusselsDateTime('2026-12-02 14:00')!,
           },
         ]}
       />,

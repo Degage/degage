@@ -2833,7 +2833,9 @@
   },
   "carSharingPage": {
     "title": "Car sharing",
-    "intro": "Pick a period. The ten nearest cars that are free the whole time are listed here.",
+    "intro": "Pick a period. The nearest cars that are free the whole time are shown here.",
+    "seats": "{count} seats",
+    "doors": "{count} doors",
     "from": "From",
     "until": "Until",
     "search": "Show cars",

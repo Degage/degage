@@ -64,7 +64,22 @@ describe('searchAvailableSharedCars', () => {
         playCarId: 1793,
         name: 'Near car',
         distanceKm: 1.7,
+        brandModel: null,
+        category: null,
+        vehicleKind: null,
+        seats: null,
+        doors: null,
+        year: null,
+        fuel: null,
+        features: [],
       },
     ]);
+  });
+
+  it('passes the requested limit through as the Degapp page size', async () => {
+    await searchAvailableSharedCars('user-1', { from: '2026-12-02T10:00', until: '2026-12-03T18:00', limit: 4 });
+
+    const path = vi.mocked(fetchPlay).mock.calls[0]?.[0] ?? '';
+    expect(path).toContain('pageSize=4');
   });
 });

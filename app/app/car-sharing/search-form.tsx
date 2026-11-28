@@ -133,13 +133,40 @@ export function CarSharingSearchForm() {
         cars.length === 0 ? (
           <p className="mt-6 text-sm text-stone-600">{t('empty')}</p>
         ) : (
-          <ul className="mt-6 divide-y divide-stone-200 rounded-2xl border border-stone-200 bg-white">
-            {cars.map((car) => (
-              <li key={car.id} className="flex items-baseline justify-between gap-4 px-4 py-3">
-                <span className="font-medium text-stone-900">{car.name}</span>
-                <span className="text-sm text-stone-500">{t('distance', { distance: car.distanceKm })}</span>
-              </li>
-            ))}
+          <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+            {cars.map((car) => {
+              const facts = [
+                car.year,
+                car.fuel,
+                car.seats ? t('seats', { count: car.seats }) : null,
+                car.doors ? t('doors', { count: car.doors }) : null,
+              ].filter((fact) => fact != null);
+              return (
+                <li key={car.id} className="rounded-2xl border border-stone-200 bg-white p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="font-semibold text-stone-900">
+                        {car.name}
+                        {car.category ? <span className="ml-2 text-xs font-medium text-stone-400">{car.category}</span> : null}
+                      </p>
+                      {car.brandModel ? <p className="text-sm text-stone-500">{car.brandModel}</p> : null}
+                    </div>
+                    <p className="text-sm font-medium text-stone-700">{t('distance', { distance: car.distanceKm })}</p>
+                  </div>
+                  {car.vehicleKind ? <p className="mt-3 text-sm text-stone-600">{car.vehicleKind}</p> : null}
+                  {facts.length > 0 ? <p className="mt-1 text-sm text-stone-600">{facts.join(' · ')}</p> : null}
+                  {(car.features ?? []).length > 0 ? (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {(car.features ?? []).map((feature) => (
+                        <span key={feature} className="rounded-full bg-stone-100 px-2 py-1 text-xs text-stone-600">
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
+                  ) : null}
+                </li>
+              );
+            })}
           </ul>
         )
       ) : null}

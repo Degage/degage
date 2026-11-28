@@ -22,7 +22,7 @@ import { fetchPlay } from '@/play-connector/client';
 import { dbSharedCarFindByPlayCarIds } from '@/storage/shared-car/shared-car.find-by-play-car-ids';
 import { dbUserFindIdsByDegappUserIds } from '@/storage/user/user.find-by-degapp-user-ids';
 import { dbRideReplaceForSharedCar } from '@/storage/ride/ride.replace-for-shared-car';
-import { parsePlayLocalDateTime } from '@/domain/play-local-time';
+import { parsePlayLocalDateTime } from '@/play-connector/play-local-time';
 
 const car = { id: '550e8400-e29b-41d4-a716-446655440010', playCarId: 1793, name: 'Near car' };
 const borrower = { id: '550e8400-e29b-41d4-a716-446655440011', degappUserId: '42' };

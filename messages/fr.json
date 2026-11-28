@@ -2833,7 +2833,9 @@
   },
   "carSharingPage": {
     "title": "Autopartage",
-    "intro": "Choisissez une période. Les dix voitures les plus proches, libres pendant toute cette période, apparaissent ici.",
+    "intro": "Choisissez une période. Les voitures les plus proches, libres pendant toute cette période, apparaissent ici.",
+    "seats": "{count} places",
+    "doors": "{count} portes",
     "from": "Du",
     "until": "Au",
     "search": "Afficher les voitures",

@@ -73,7 +73,18 @@ describe('CarSharingContent', () => {
         .mockResolvedValueOnce({
           ok: true,
           json: async () => ({
-            cars: [{ id: '550e8400-e29b-41d4-a716-446655440010', playCarId: 1793, name: 'Near car', distanceKm: 1.7 }],
+            cars: [
+              {
+                id: '550e8400-e29b-41d4-a716-446655440010',
+                playCarId: 1793,
+                name: 'Near car',
+                distanceKm: 1.7,
+                brandModel: 'Renault Captur',
+                year: 2019,
+                fuel: 'Benzine',
+                features: ['gps'],
+              },
+            ],
           }),
         }),
     );
@@ -83,6 +94,8 @@ describe('CarSharingContent', () => {
     fireEvent.click(await screen.findByRole('button', { name: 'search' }));
 
     expect(await screen.findByText('Near car')).toBeTruthy();
+    expect(screen.getByText('Renault Captur')).toBeTruthy();
+    expect(screen.getByText('gps')).toBeTruthy();
     expect(screen.getByText('1.7 km')).toBeTruthy();
   });
 

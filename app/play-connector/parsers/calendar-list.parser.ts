@@ -4,11 +4,67 @@ export type PlayAvailableCar = {
   playCarId: number;
   name: string;
   distanceKm: number;
+  brandModel: string | null;
+  category: string | null;
+  vehicleKind: string | null;
+  seats: number | null;
+  doors: number | null;
+  year: number | null;
+  fuel: string | null;
+  features: string[];
 };
 
 const DISTANCE_PATTERN = /^([\d.,]+)\s*km$/i;
 
 const collapseText = (value: string): string => value.replace(/\s+/g, ' ').trim();
+
+const FUELS = new Set(['benzine', 'diesel', 'elektrisch', 'hybride', 'cng', 'lpg', 'waterstof']);
+const VEHICLE_KINDS = new Set(['personenwagen', 'bestelwagen', 'busje', 'monovolume']);
+
+const emptyCarDetails = {
+  brandModel: null,
+  category: null,
+  vehicleKind: null,
+  seats: null,
+  doors: null,
+  year: null,
+  fuel: null,
+  features: [] as string[],
+};
+
+const detailsFromLabels = (labels: string[]) => {
+  const details = { ...emptyCarDetails, features: [] as string[] };
+  for (const label of labels) {
+    if (/^\d{4}$/.test(label)) {
+      details.year = Number(label);
+      continue;
+    }
+    const seats = label.match(/^(\d+)\s+(zetels|seats|places)$/i);
+    if (seats) {
+      details.seats = Number(seats[1]);
+      continue;
+    }
+    const doors = label.match(/^(\d+)\s+(deuren|doors|portes)$/i);
+    if (doors) {
+      details.doors = Number(doors[1]);
+      continue;
+    }
+    if (FUELS.has(label.toLowerCase())) {
+      details.fuel = label;
+      continue;
+    }
+    if (VEHICLE_KINDS.has(label.toLowerCase())) {
+      details.vehicleKind = label;
+      continue;
+    }
+    if (/^[A-Z]$/.test(label) && !details.category) {
+      details.category = label;
+      continue;
+    }
+    details.features.push(label);
+  }
+  return details;
+};
 
 export const parseCalendarList = (html: string): PlayAvailableCar[] => {
   const $ = cheerio.load(html);
@@ -31,7 +87,15 @@ export const parseCalendarList = (html: string): PlayAvailableCar[] => {
     const distanceKm = Number(distanceMatch[1].replace(',', '.'));
     if (!Number.isInteger(playCarId) || playCarId <= 0 || Number.isNaN(distanceKm)) return;
 
-    cars.push({ playCarId, name, distanceKm });
+    const reserveText = collapseText($(row).find('a[href*="/reservation/create"]').first().parent().text());
+    const brandModel = reserveText.replace(/^(Reserveer|Réserver|Reserve)\s+/i, '') || null;
+    const labels = $(row)
+      .find('span.label')
+      .map((__, label) => collapseText($(label).text()))
+      .get()
+      .filter(Boolean);
+
+    cars.push({ playCarId, name, distanceKm, ...detailsFromLabels(labels), brandModel });
   });
 
   return cars;
@@ -56,13 +120,13 @@ const CALENDAR_LIST_FILTER_DEFAULTS = [
   'trunk_depth=',
 ];
 
-export const CALENDAR_LIST_PAGE_SIZE = 10;
+export const DEFAULT_CALENDAR_LIST_PAGE_SIZE = 10;
 
-export const calendarListPath = (from: string, until: string): string => {
+export const calendarListPath = (from: string, until: string, pageSize = DEFAULT_CALENDAR_LIST_PAGE_SIZE): string => {
   const filter = [`from=${from}`, `until=${until}`, ...CALENDAR_LIST_FILTER_DEFAULTS].join(',');
   const params = new URLSearchParams({
     page: '1',
-    pageSize: String(CALENDAR_LIST_PAGE_SIZE),
+    pageSize: String(pageSize),
     asc: '1',
     filter,
   });

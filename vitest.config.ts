@@ -5,7 +5,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
   plugins: [tsconfigPaths(), react()],
   test: {
-    exclude: [...configDefaults.exclude, 'e2e/**'],
+    exclude: [...configDefaults.exclude, 'e2e/**', '_work/**'],
     environment: 'jsdom',
     coverage: {
       include: ['app/**/*.{ts,tsx}'],

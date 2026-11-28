@@ -1,5 +1,6 @@
-import { parsePlayLocalDateTime } from '@/domain/play-local-time';
 import { type RideStatus } from '@/domain/ride.model';
+
+import { parsePlayLocalDateTime } from '@/play-connector/play-local-time';
 
 export type ParsedCarRide = {
   playReservationId: number;

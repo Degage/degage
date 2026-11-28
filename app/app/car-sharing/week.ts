@@ -1,5 +1,6 @@
-import { formatPlayLocalDay, formatPlayLocalTime, parsePlayLocalDateTime } from '@/domain/play-local-time';
 import type { RideStatus } from '@/domain/ride.model';
+
+import { brusselsDateTime, brusselsWeekdayShort, formatBrusselsDay, formatBrusselsTime } from '@/app/car-sharing/brussels-time';
 
 export type WeekDay = {
   key: string;
@@ -23,9 +24,9 @@ const addCivilDays = (isoDate: string, days: number): string => {
 };
 
 const brusselsWeekdayIndex = (day: string): number => {
-  const noon = parsePlayLocalDateTime(`${day} 12:00`);
+  const noon = brusselsDateTime(`${day} 12:00`);
   if (!noon) return 0;
-  const weekday = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Brussels', weekday: 'short' }).format(noon);
+  const weekday = brusselsWeekdayShort(noon);
   return WEEKDAY_INDEX[weekday] ?? 0;
 };
 
@@ -34,10 +35,10 @@ export const weekContaining = (from: string): WeekDay[] => {
   const monday = addCivilDays(day, -brusselsWeekdayIndex(day));
   return Array.from({ length: 7 }, (_, index) => {
     const key = addCivilDays(monday, index);
-    const start = parsePlayLocalDateTime(`${key} 00:00`);
-    const end = parsePlayLocalDateTime(`${addCivilDays(key, 1)} 00:00`);
+    const start = brusselsDateTime(`${key} 00:00`);
+    const end = brusselsDateTime(`${addCivilDays(key, 1)} 00:00`);
     if (!start || !end) return null;
-    return { key, start, end, label: formatPlayLocalDay(start) };
+    return { key, start, end, label: formatBrusselsDay(start) };
   }).flatMap((column) => (column ? [column] : []));
 };
 
@@ -48,12 +49,12 @@ export const rideLabel = (ride: WeekRide, day: WeekDay): string | null => {
   if (!rangesOverlap(ride.startsAt, ride.endsAt, day.start, day.end)) return null;
   const start = ride.startsAt > day.start ? ride.startsAt : day.start;
   const end = ride.endsAt < day.end ? ride.endsAt : day.end;
-  return `${formatPlayLocalTime(start)}–${formatPlayLocalTime(end)}`;
+  return `${formatBrusselsTime(start)}–${formatBrusselsTime(end)}`;
 };
 
 export const periodOverlapsDay = (period: { from: string; until: string }, day: WeekDay): boolean => {
-  const from = parsePlayLocalDateTime(period.from.replace('T', ' '));
-  const until = parsePlayLocalDateTime(period.until.replace('T', ' '));
+  const from = brusselsDateTime(period.from);
+  const until = brusselsDateTime(period.until);
   if (!from || !until) return false;
   return rangesOverlap(from, until, day.start, day.end);
 };

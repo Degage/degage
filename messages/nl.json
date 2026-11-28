@@ -2833,7 +2833,9 @@
   },
   "carSharingPage": {
     "title": "Autodelen",
-    "intro": "Kies een periode. De tien dichtstbijzijnde wagens die de hele tijd vrij zijn, staan hier.",
+    "intro": "Kies een periode. De dichtstbijzijnde wagens die de hele tijd vrij zijn, staan hier.",
+    "seats": "{count} zitplaatsen",
+    "doors": "{count} deuren",
     "from": "Van",
     "until": "Tot",
     "search": "Toon wagens",

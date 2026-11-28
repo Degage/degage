@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { parsePlayLocalDateTime } from '@/domain/play-local-time';
+import { parsePlayLocalDateTime } from '@/play-connector/play-local-time';
 import { calendarEventsPath, parseCalendarEvents } from '@/play-connector/parsers/calendar-events.parser';
 
 const jsonEvents = JSON.stringify([{ id: 123, start: '2026-12-02 10:00', end: '2026-12-02 12:00', status: 'ACCEPTED', userId: '42' }]);
