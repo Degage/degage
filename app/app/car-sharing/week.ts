@@ -44,17 +44,49 @@ export const weekContaining = (from: string): WeekDay[] => {
 
 export const rangesOverlap = (start: Date, end: Date, otherStart: Date, otherEnd: Date): boolean => start < otherEnd && end > otherStart;
 
-export const rideLabel = (ride: WeekRide, day: WeekDay): string | null => {
-  if (ride.status === 'declined') return null;
-  if (!rangesOverlap(ride.startsAt, ride.endsAt, day.start, day.end)) return null;
-  const start = ride.startsAt > day.start ? ride.startsAt : day.start;
-  const end = ride.endsAt < day.end ? ride.endsAt : day.end;
-  return `${formatBrusselsTime(start)}–${formatBrusselsTime(end)}`;
+// The cell draws 07:00–23:00. A reservation outside that window is clipped to the edge of the track.
+const TRACK_START = '07:00';
+const TRACK_END = '23:00';
+
+export type TrackBlock = {
+  left: number;
+  width: number;
+  label: string;
 };
 
-export const periodOverlapsDay = (period: { from: string; until: string }, day: WeekDay): boolean => {
+const trackBounds = (day: WeekDay): { start: Date; end: Date } | null => {
+  const start = brusselsDateTime(`${day.key} ${TRACK_START}`);
+  const end = brusselsDateTime(`${day.key} ${TRACK_END}`);
+  if (!start || !end || end <= start) return null;
+  return { start, end };
+};
+
+const percent = (value: number): number => Math.round(value * 10) / 10;
+
+export const blockOnTrack = (start: Date, end: Date, day: WeekDay): TrackBlock | null => {
+  const bounds = trackBounds(day);
+  if (!bounds || !rangesOverlap(start, end, bounds.start, bounds.end)) return null;
+  const visibleStart = start > bounds.start ? start : bounds.start;
+  const visibleEnd = end < bounds.end ? end : bounds.end;
+  const span = bounds.end.getTime() - bounds.start.getTime();
+  const left = ((visibleStart.getTime() - bounds.start.getTime()) / span) * 100;
+  const width = ((visibleEnd.getTime() - visibleStart.getTime()) / span) * 100;
+  if (width <= 0) return null;
+  return {
+    left: percent(left),
+    width: percent(width),
+    label: `${formatBrusselsTime(visibleStart)}–${formatBrusselsTime(visibleEnd)}`,
+  };
+};
+
+export const rideBlock = (ride: WeekRide, day: WeekDay): TrackBlock | null => {
+  if (ride.status === 'declined') return null;
+  return blockOnTrack(ride.startsAt, ride.endsAt, day);
+};
+
+export const periodBlock = (period: { from: string; until: string }, day: WeekDay): TrackBlock | null => {
   const from = brusselsDateTime(period.from);
   const until = brusselsDateTime(period.until);
-  if (!from || !until) return false;
-  return rangesOverlap(from, until, day.start, day.end);
+  if (!from || !until) return null;
+  return blockOnTrack(from, until, day);
 };

@@ -2844,7 +2844,9 @@
     "error": "La recherche n'a pas abouti. Réessayez.",
     "distance": "{distance} km",
     "weekLoading": "Chargement de la semaine…",
-    "weekUnavailable": "La vue semaine n'est pas encore disponible."
+    "weekUnavailable": "La vue semaine n'est pas encore disponible.",
+    "reserved": "Réservé",
+    "searched": "Période recherchée"
   },
   "landing": {
     "brand": "Dégage!",

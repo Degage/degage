@@ -3,6 +3,7 @@
 - Added: on the car-sharing page you can pick a period and see the nearest free cars as tiles.
 - Changed: how many cars come back is a search parameter. It defaults to 10.
 - Added: a week of the ten nearest cars appears under that list once their calendars are loaded.
+- Changed: that week shows reserved time and the period you searched as bars from 7:00 to 23:00. The hours appear when you point at a bar.
 
 ### Technical
 

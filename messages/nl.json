@@ -2844,7 +2844,9 @@
     "error": "De zoekopdracht is niet gelukt. Probeer opnieuw.",
     "distance": "{distance} km",
     "weekLoading": "Week laden…",
-    "weekUnavailable": "De weekweergave is nog niet beschikbaar."
+    "weekUnavailable": "De weekweergave is nog niet beschikbaar.",
+    "reserved": "Gereserveerd",
+    "searched": "Gezochte periode"
   },
   "landing": {
     "brand": "Dégage!",

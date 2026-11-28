@@ -1,5 +1,9 @@
 import { cleanup, render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
+vi.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+}));
 
 import { CarSharingWeekGrid } from '@/app/car-sharing/week-grid';
 import { brusselsDateTime } from '@/app/car-sharing/brussels-time';
@@ -18,7 +22,7 @@ describe('CarSharingWeekGrid', () => {
     cleanup();
   });
 
-  it('shows a ride on the surrounding week and highlights the chosen days', () => {
+  it('places reserved time and the searched period on a 7:00–23:00 track', () => {
     render(
       <CarSharingWeekGrid
         cars={[car]}
@@ -41,9 +45,15 @@ describe('CarSharingWeekGrid', () => {
     );
 
     expect(screen.getByText('Near car')).toBeTruthy();
-    expect(screen.getByText('10:00–12:00')).toBeTruthy();
-    expect(screen.queryByText('13:00–14:00')).toBeNull();
-    const highlighted = document.querySelectorAll('[data-highlighted="true"]');
-    expect(highlighted.length).toBe(2);
+    expect(screen.queryByText('10:00–12:00')).toBeNull();
+
+    const reserved = screen.getByRole('button', { name: '10:00–12:00' });
+    expect(reserved.dataset.kind).toBe('reserved');
+    expect(reserved.dataset.left).toBe('18.8');
+    expect(reserved.dataset.width).toBe('12.5');
+    expect(screen.queryByRole('button', { name: '13:00–14:00' })).toBeNull();
+
+    const searched = screen.getAllByRole('button').filter((node) => node.getAttribute('data-kind') === 'searched');
+    expect(searched.map((node) => node.getAttribute('aria-label'))).toEqual(['10:00–23:00', '07:00–18:00']);
   });
 });
