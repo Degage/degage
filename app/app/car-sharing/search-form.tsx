@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { CarSharingWeekGrid } from '@/app/car-sharing/week-grid';
@@ -45,41 +45,21 @@ export function CarSharingSearchForm() {
   const [failed, setFailed] = useState(false);
   const [week, setWeek] = useState<'hidden' | 'loading' | 'ready' | 'unavailable'>('hidden');
   const [weekRides, setWeekRides] = useState<WeekRide[]>([]);
+  const requestId = useRef(0);
 
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setSearching(true);
-    setFailed(false);
-    setWeek('hidden');
-    setWeekRides([]);
-    try {
-      const response = await fetch('/api/car-sharing/search', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(period),
-      });
-      if (!response.ok) throw new Error('search failed');
-      const data = (await response.json()) as { cars?: SharedCarSearchResult[] };
-      setCars(data.cars ?? []);
-    } catch {
-      setCars(null);
-      setFailed(true);
-    } finally {
-      setSearching(false);
+  const loadWeek = async (nearest: SharedCarSearchResult[], id: number) => {
+    if (nearest.length === 0) {
+      setWeek('hidden');
+      return;
     }
-  };
-
-  const weekCars = (cars ?? []).slice(0, SHARED_CAR_WEEK_LIMIT);
-
-  const onShowWeek = async () => {
-    if (weekCars.length === 0) return;
     setWeek('loading');
     try {
       const response = await fetch('/api/car-sharing/calendar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ playCarIds: weekCars.map((car) => car.playCarId) }),
+        body: JSON.stringify({ playCarIds: nearest.map((car) => car.playCarId) }),
       });
+      if (id !== requestId.current) return;
       if (!response.ok) throw new Error('calendar failed');
       const data = (await response.json()) as CalendarResponse;
       if (!data.available) {
@@ -97,10 +77,42 @@ export function CarSharingSearchForm() {
       );
       setWeek('ready');
     } catch {
+      if (id !== requestId.current) return;
       setWeekRides([]);
       setWeek('unavailable');
     }
   };
+
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const id = ++requestId.current;
+    setSearching(true);
+    setFailed(false);
+    setWeek('hidden');
+    setWeekRides([]);
+    try {
+      const response = await fetch('/api/car-sharing/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(period),
+      });
+      if (id !== requestId.current) return;
+      if (!response.ok) throw new Error('search failed');
+      const data = (await response.json()) as { cars?: SharedCarSearchResult[] };
+      const found = data.cars ?? [];
+      setCars(found);
+      void loadWeek(found.slice(0, SHARED_CAR_WEEK_LIMIT), id);
+    } catch {
+      if (id !== requestId.current) return;
+      setCars(null);
+      setFailed(true);
+      setWeek('hidden');
+    } finally {
+      if (id === requestId.current) setSearching(false);
+    }
+  };
+
+  const weekCars = (cars ?? []).slice(0, SHARED_CAR_WEEK_LIMIT);
 
   return (
     <div className="mt-8">
@@ -174,11 +186,6 @@ export function CarSharingSearchForm() {
         )
       ) : null}
 
-      {cars && cars.length > 0 && week === 'hidden' ? (
-        <button className={`${buttonClassName} mt-4`} type="button" onClick={() => void onShowWeek()}>
-          {t('week')}
-        </button>
-      ) : null}
       {week === 'loading' ? <p className="mt-4 text-sm text-stone-500">{t('weekLoading')}</p> : null}
       {week === 'unavailable' ? <p className="mt-4 text-sm text-stone-600">{t('weekUnavailable')}</p> : null}
       {week === 'ready' && weekCars.length > 0 ? <CarSharingWeekGrid cars={weekCars} rides={weekRides} period={period} /> : null}

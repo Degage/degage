@@ -111,4 +111,4 @@ export const parseCalendarEvents = (body: string): CalendarEventsParse => {
   return { recognized: false };
 };
 
-export const calendarEventsPath = (playCarId: number): string => `/calendarevents/car?id=${playCarId}`;
+export const calendarEventsPath = (playCarId: number): string => `/calendarevents/car?id=${playCarId}&separator=`;

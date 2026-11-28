@@ -53,7 +53,7 @@ describe('syncSharedCarCalendar', () => {
     const calendar = await syncSharedCarCalendar('user-1', { playCarIds: [1793] });
 
     expect(fetchPlay).toHaveBeenCalledTimes(1);
-    expect(fetchPlay).toHaveBeenCalledWith('/calendarevents/car?id=1793', 'PLAY_SESSION=1');
+    expect(fetchPlay).toHaveBeenCalledWith('/calendarevents/car?id=1793&separator=', 'PLAY_SESSION=1');
     expect(dbRideReplaceForSharedCar).toHaveBeenCalledWith(car.id, [
       {
         sharedCarId: car.id,

@@ -44,7 +44,7 @@ describe('parseCalendarEvents', () => {
 });
 
 describe('calendarEventsPath', () => {
-  it('asks for one car and no date', () => {
-    expect(calendarEventsPath(1793)).toBe('/calendarevents/car?id=1793');
+  it('asks for one car and includes the separator Degapp requires', () => {
+    expect(calendarEventsPath(1793)).toBe('/calendarevents/car?id=1793&separator=');
   });
 });

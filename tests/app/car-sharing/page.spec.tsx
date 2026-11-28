@@ -86,6 +86,10 @@ describe('CarSharingContent', () => {
               },
             ],
           }),
+        })
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => ({ available: true, cars: [], rides: [] }),
         }),
     );
 
@@ -93,7 +97,7 @@ describe('CarSharingContent', () => {
 
     fireEvent.click(await screen.findByRole('button', { name: 'search' }));
 
-    expect(await screen.findByText('Near car')).toBeTruthy();
+    expect(await screen.findAllByText('Near car')).toHaveLength(2);
     expect(screen.getByText('Renault Captur')).toBeTruthy();
     expect(screen.getByText('gps')).toBeTruthy();
     expect(screen.getByText('1.7 km')).toBeTruthy();
@@ -119,7 +123,6 @@ describe('CarSharingContent', () => {
 
     render(<CarSharingPage />);
     fireEvent.click(await screen.findByRole('button', { name: 'search' }));
-    fireEvent.click(await screen.findByRole('button', { name: 'week' }));
 
     expect(await screen.findByText('weekUnavailable')).toBeTruthy();
     expect(screen.queryByRole('table')).toBeNull();
@@ -141,7 +144,6 @@ describe('CarSharingContent', () => {
 
     render(<CarSharingPage />);
     fireEvent.click(await screen.findByRole('button', { name: 'search' }));
-    fireEvent.click(await screen.findByRole('button', { name: 'week' }));
 
     const table = await screen.findByRole('table');
     const calendarBody = JSON.parse(String(fetchMock.mock.calls[2]?.[1]?.body)) as { playCarIds: number[] };
